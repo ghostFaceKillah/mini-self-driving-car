@@ -11,3 +11,8 @@ Building a small self driving car
 - [ ] figure out how to power the whole car
 - [ ] figure out how to stream video over wifi from raspi to gpu computer
 - [ ] figure out what to figure out
+
+
+## Links and resources found around the web
+- https://picamera.readthedocs.io/en/release-1.10/recipes2.html
+- https://github.com/hamuchiwa/AutoRCCar
