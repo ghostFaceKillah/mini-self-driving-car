@@ -9,6 +9,7 @@ Building a small self driving car
 ## Stuff to figure out
 - [x] make sure to understand the schematic [here](https://business.tutsplus.com/tutorials/controlling-dc-motors-using-python-with-a-raspberry-pi--cms-20051)
 - [ ] upload simplified schematic mentioned above to this repo
+- [ ] more civilised way to turn off RPI
 - [ ] how to make breadboard host for L293 chip more resistant:
     - [ ] perhaps figure out how to make your own PCB?
 - [x] figure out how to power the whole car
