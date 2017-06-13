@@ -16,6 +16,7 @@ Building a small self driving car
     - [ ] perhaps figure out how to make your own PCB?
 - [x] figure out how to power the whole car
 - [ ] figure out how to stream video over wifi from raspi to gpu computer FAST
+    - [ ] In case of trouble, check how soft for drones is made. Do these guys push live preview of video so fast over cell phone internet?
     - [ ] Figure out the picture reading part
         - [ ] [RPI Camera web interface](http://elinux.org/RPi-Cam-Web-Interface) have reasonable speed to a browser. http://elinux.org/RPi-Cam-Web-Interface. Check how they read data from raspi camera?
         - [ ] Check what picamera module is actually doing under the hood
@@ -25,6 +26,7 @@ Building a small self driving car
         - [ ] read about zmq in py
      - [ ] Figure out the displaying part
         - [ ] pygame?
+      
     
 - [ ] figure out what to figure out
 
