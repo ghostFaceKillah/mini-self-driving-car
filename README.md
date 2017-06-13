@@ -7,6 +7,8 @@ Building a small self driving car
 
 
 ## Stuff to figure out
+
+#### GOAL for now: Live wifi-based control from keyboard of GPU computer, very low latency
 - [x] make sure to understand the schematic [here](https://business.tutsplus.com/tutorials/controlling-dc-motors-using-python-with-a-raspberry-pi--cms-20051)
 - [ ] upload simplified schematic mentioned above to this repo
 - [ ] more civilised way to turn off RPI
