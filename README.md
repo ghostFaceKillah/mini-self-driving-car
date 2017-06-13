@@ -7,9 +7,13 @@ Building a small self driving car
 
 
 ## Stuff to figure out
-- [ ] make sure to understand the schematic [here](https://business.tutsplus.com/tutorials/controlling-dc-motors-using-python-with-a-raspberry-pi--cms-20051)
-- [ ] figure out how to power the whole car
+- [x] make sure to understand the schematic [here](https://business.tutsplus.com/tutorials/controlling-dc-motors-using-python-with-a-raspberry-pi--cms-20051)
+- [ ] upload simplified schematic mentioned above to this repo
+- [x] figure out how to power the whole car
 - [ ] figure out how to stream video over wifi from raspi to gpu computer
+    - [ ] read about socketio and eventlet (as used in [here](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
+    - [ ] read about vanilla py socket module
+    - [ ] read about zmq in py
 - [ ] figure out what to figure out
 
 
