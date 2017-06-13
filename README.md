@@ -11,7 +11,7 @@ Building a small self driving car
 - [ ] upload simplified schematic mentioned above to this repo
 - [x] figure out how to power the whole car
 - [ ] figure out how to stream video over wifi from raspi to gpu computer FAST
-    - [ ] [RPI Camera web interface] have reasonable speed to a browser. http://elinux.org/RPi-Cam-Web-Interface 
+    - [ ] [RPI Camera web interface](http://elinux.org/RPi-Cam-Web-Interface) have reasonable speed to a browser. http://elinux.org/RPi-Cam-Web-Interface 
     - [ ] read about socketio and eventlet (as used in [here](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
     - [ ] read about vanilla py socket module
     - [ ] read about zmq in py
