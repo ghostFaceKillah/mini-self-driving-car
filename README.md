@@ -19,11 +19,11 @@ Building a small self driving car
     - [ ] Figure out the picture reading part
         - [ ] [RPI Camera web interface](http://elinux.org/RPi-Cam-Web-Interface) have reasonable speed to a browser. http://elinux.org/RPi-Cam-Web-Interface. Check how they read data from raspi camera?
         - [ ] Check what picamera module is actually doing under the hood
-     - Figure out the sending part   
+     - [ ] Figure out the sending part   
         - [ ] read about socketio and eventlet (as used in [here](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
         - [ ] read about vanilla py socket module
         - [ ] read about zmq in py
-     - Figure out the displaying part
+     - [ ] Figure out the displaying part
         - [ ] pygame?
     
 - [ ] figure out what to figure out
