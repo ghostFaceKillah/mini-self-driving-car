@@ -38,9 +38,9 @@ Building a small self driving car
 - https://github.com/hamuchiwa/AutoRCCar
 
 ##### Async IO
-https://www.fsl.cs.sunysb.edu/~vass/linux-aio.txt
-http://man7.org/linux/man-pages/man7/aio.7.html
-https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/Tuning_and_Optimizing_Red_Hat_Enterprise_Linux_for_Oracle_9i_and_10g_Databases/sect-Oracle_9i_and_10g_Tuning_Guide-Enabling_Asynchronous_IO_and_Direct_IO_Support-Verifying_Asynchronous_IO_Usage.html
+- https://www.fsl.cs.sunysb.edu/~vass/linux-aio.txt
+- http://man7.org/linux/man-pages/man7/aio.7.html
+- https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/Tuning_and_Optimizing_Red_Hat_Enterprise_Linux_for_Oracle_9i_and_10g_Databases/sect-Oracle_9i_and_10g_Tuning_Guide-Enabling_Asynchronous_IO_and_Direct_IO_Support-Verifying_Asynchronous_IO_Usage.html
 
 ##### Raspi cam
 - https://github.com/raspberrypi/userland/tree/master/host_applications/linux/apps/raspicam (that's what RPI Cam Web Interface does)
