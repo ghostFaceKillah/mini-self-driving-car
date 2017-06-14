@@ -27,3 +27,14 @@ used in 3 known places:
 
 I have tested the advanced implementation from above. It looks like it will be sufficient for now.
 
+
+
+## Random links
+##### Raspi cam
+- https://github.com/raspberrypi/userland/tree/master/host_applications/linux/apps/raspicam (that's what RPI Cam Web Interface does)
+- https://github.com/cedricve/raspicam
+- https://github.com/silvanmelchior/RPi_Cam_Web_Interface (the actual RPi Cam web interface repo)
+- https://github.com/silvanmelchior/userland/tree/master/host_applications/linux/apps/raspicam (original (??) implementation of raspimjpeg)
+- https://github.com/rpicopter/raspimjpeg
+- https://github.com/waveform80/picamera
+
