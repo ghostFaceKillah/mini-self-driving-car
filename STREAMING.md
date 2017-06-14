@@ -14,3 +14,6 @@ Raspivid source:
 https://github.com/raspberrypi/userland/blob/master/host_applications/linux/apps/raspicam/RaspiVid.c
 
 
+
+This one is a variation on what Wang Zheng is doing. Looks faster xD
+http://picamera.readthedocs.io/en/release-1.12/recipes1.html#capturing-to-a-network-stream
