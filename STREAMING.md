@@ -29,13 +29,15 @@ I have tested the advanced implementation from above. It looks like it will be s
 
 
 
-## Random links
+## Sending data over the wire.
 
 - [ ] Figure out the sending part   
-  - [ ] read about socketio and eventlet (as used in [here](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
+  - [ ] read about socketio and eventlet (as used in [udacity self driving car project by yourself](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
   - [ ] read about vanilla py socket module
   - [ ] read about zmq in py
   - [ ] read about io package in python as used [here](https://picamera.readthedocs.io/en/release-1.13/recipes2.html#rapid-capture-and-streaming)
+  
+- [ ] In case of trouble, check how soft for drones is made. Do these guys push live preview of video so fast over cell phone internet?
         
 
 ##### Raspi cam
