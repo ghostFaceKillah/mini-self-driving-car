@@ -1,3 +1,6 @@
+
+## Raspivid method
+
 A method suggested [here](https://raspberrypi.stackexchange.com/questions/27082/how-to-stream-raspivid-to-linux-and-osx-using-gstreamer-vlc-or-netcat) works very nice.
 
 On client
@@ -15,11 +18,12 @@ https://github.com/raspberrypi/userland/blob/master/host_applications/linux/apps
 
 
 
-This one is a variation on what Wang Zheng is doing. Looks faster xD. (but is not)
+## picamera method
 
-http://picamera.readthedocs.io/en/release-1.12/recipes1.html#capturing-to-a-network-stream
+used in 3 known places:
+- [Wang Zheng implementation]
+- [picamera easy recipe](https://picamera.readthedocs.io/en/release-1.13/recipes1.html#capturing-to-a-network-stream)
+- [picamera advanced recipe](https://picamera.readthedocs.io/en/release-1.13/recipes2.html#rapid-capture-and-streaming)
 
-Here we see  variation called fast by the author of picamera
+I have tested the advanced implementation from above. It looks like it will be sufficient for now.
 
-
-https://picamera.readthedocs.io/en/release-1.13/recipes2.html#rapid-capture-and-streaming
