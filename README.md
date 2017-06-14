@@ -15,16 +15,17 @@ Building a small self driving car
 - [ ] how to make breadboard host for L293 chip more resistant:
     - [ ] perhaps figure out how to make your own PCB?
 - [x] figure out how to power the whole car
-- [ ] figure out how to stream video over wifi from raspi to gpu computer FAST
+- [X] figure out how to stream video over wifi from raspi to gpu computer FAST
     - [ ] In case of trouble, check how soft for drones is made. Do these guys push live preview of video so fast over cell phone internet?
-    - [ ] Figure out the picture reading part
-        - [ ] [RPI Camera web interface](http://elinux.org/RPi-Cam-Web-Interface) have reasonable speed to a browser.
+    - [X] Figure out the picture reading part
+        - [X] [RPI Camera web interface](http://elinux.org/RPi-Cam-Web-Interface) have reasonable speed to a browser.
              Check how they read data from raspi camera?
-        - [ ] Check what picamera module is actually doing under the hood
+        - [X] Check what picamera module is actually doing under the hood
      - [ ] Figure out the sending part   
         - [ ] read about socketio and eventlet (as used in [here](https://github.com/ghostFaceKillah/behavioral-cloning-self-driving-car/blob/master/drive.py)
         - [ ] read about vanilla py socket module
         - [ ] read about zmq in py
+        - [ ] read about io package in python as used [here](https://picamera.readthedocs.io/en/release-1.13/recipes2.html#rapid-capture-and-streaming)
      - [ ] Figure out the displaying part
         - [ ] pygame?
       
@@ -34,7 +35,6 @@ Building a small self driving car
 
 ## Links and resources found around the web
 
-- https://picamera.readthedocs.io/en/release-1.10/recipes2.html
 - https://github.com/hamuchiwa/AutoRCCar
 
 ##### Async IO
@@ -42,13 +42,7 @@ Building a small self driving car
 - http://man7.org/linux/man-pages/man7/aio.7.html
 - https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/5/html/Tuning_and_Optimizing_Red_Hat_Enterprise_Linux_for_Oracle_9i_and_10g_Databases/sect-Oracle_9i_and_10g_Tuning_Guide-Enabling_Asynchronous_IO_and_Direct_IO_Support-Verifying_Asynchronous_IO_Usage.html
 
-##### Raspi cam
-- https://github.com/raspberrypi/userland/tree/master/host_applications/linux/apps/raspicam (that's what RPI Cam Web Interface does)
-- https://github.com/cedricve/raspicam
-- https://github.com/silvanmelchior/RPi_Cam_Web_Interface (the actual RPi Cam web interface repo)
-- https://github.com/silvanmelchior/userland/tree/master/host_applications/linux/apps/raspicam (original (??) implementation of raspimjpeg)
-- https://github.com/rpicopter/raspimjpeg
-- https://github.com/waveform80/picamera
+
 
 
 
