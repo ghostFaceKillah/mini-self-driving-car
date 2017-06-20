@@ -13,6 +13,7 @@ Building a small self driving car
 - [ ] more civilised way to turn off RPI
 - [ ] how to make breadboard host for L293 chip more resistant:
     - [ ] perhaps figure out how to make your own PCB?
+          PCBs can be ordered in low quantities from [OSHPark](https://oshpark.com/)
 - [ ] Implement steering capture from one computer to another
 
 When the above are done, 
