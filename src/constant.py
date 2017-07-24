@@ -19,4 +19,3 @@ REV_ACTION = {
     v: k 
     for k, v in ACTION.iteritems()
 }
-
