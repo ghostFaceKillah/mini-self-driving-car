@@ -36,7 +36,6 @@ def go_forward():
 def stop():
     send('uo')
     print "Stopping the car"
-    GPIO.output(Motor2E, GPIO.LOW)
 
 
 def register_hooks():
@@ -49,6 +48,8 @@ def register_hooks():
 
 try:
     register_hooks()
+    while True:
+        time.sleep(0.1)
 
 finally:
     print >>sys.stderr, 'closing socket'
