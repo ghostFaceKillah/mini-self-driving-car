@@ -25,9 +25,6 @@ When the above are done,
 - [ ] Implement a driving system
 - [ ] Figure out how to capture testing data        
 
-
-[ ] Start writing
-
 ### DONE (saved here for further motivation)
 - [X] Reimplement the hardware control with bigger car, as the old one is too small...
 - [x] figure out how to power the whole car
@@ -52,7 +49,8 @@ When the above are done,
 
 ## Misc useful links
 
-https://pymotw.com/2/select/
+- https://pymotw.com/2/select/
+- https://picamera.readthedocs.io/en/release-1.13/
 
 
 
