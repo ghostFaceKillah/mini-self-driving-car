@@ -2,16 +2,13 @@ import socket
 import sys
 import RPi.GPIO as GPIO
 from time import sleep 
-import constant as cnst
 
-
-
-
+import lib.constant as cnst
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 HOST = socket.gethostbyname(socket.gethostname())
-server_address = ('0.0.0.0', 4567)
+server_address = ('0.0.0.0', cnst.KEYBOARD_EVENTS_PORT)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
 

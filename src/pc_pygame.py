@@ -1,15 +1,13 @@
 import pygame
 import sys
 
-from client import ClientSocket
-from constant import *
+from lib.client_socket import ClientSocket
+from lib.constant import *
 
 pygame.init()
 pygame.display.set_mode((100, 100))
 
-rpi = "192.168.192.51"
-port = 4567
-sock = ClientSocket(rpi, port, True)
+sock = ClientSocket(RASPI_IP, KEYBOARD_EVENTS_PORT, True)
 sock.connect()
 
 def keydown(event):
