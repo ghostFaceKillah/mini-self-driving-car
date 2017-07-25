@@ -89,6 +89,8 @@ def interpret(msg):
 
 
 try: 
+    stop()
+    stop_turning()
     while True:
         print 'waiting for connections...'
         connection, client_address = sock.accept()
