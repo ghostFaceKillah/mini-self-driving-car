@@ -1,3 +1,6 @@
+def msg(direction, action):
+    return "{}{}".format(DIRECTION[direction], ACTION[action])
+
 DIRECTION = {
     'up':    'u',
     'down':  'd',

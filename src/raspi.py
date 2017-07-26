@@ -84,11 +84,18 @@ def interpret(msg):
         elif action == 'stop':
             stop_turning()
 
+
+"""
+TODO:
+    Make the socket nonblocking
+    and make so that if we don't receive data for some time we stop
+    going forward so the car doesn't run away into infinity :)
+"""
+
 try: 
     stop()
     stop_turning()
     while True:
-        print 'waiting for connections...'
         data, client_address = sock.recvfrom(16)
 
         print 'received {} from {}'.format(data, client_address)
