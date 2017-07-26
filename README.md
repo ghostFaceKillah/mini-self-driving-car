@@ -52,5 +52,5 @@ When the above are done,
 - https://pymotw.com/2/select/
 - https://picamera.readthedocs.io/en/release-1.13/
 - http://www.scottklement.com/rpg/socktut/nonblocking.html
-
+- https://stackoverflow.com/questions/10654286/why-should-i-use-non-blocking-or-blocking-sockets
 
