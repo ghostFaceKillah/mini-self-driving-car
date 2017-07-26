@@ -53,4 +53,4 @@ When the above are done,
 - https://picamera.readthedocs.io/en/release-1.13/
 - http://www.scottklement.com/rpg/socktut/nonblocking.html
 - https://stackoverflow.com/questions/10654286/why-should-i-use-non-blocking-or-blocking-sockets
-
+- https://stackoverflow.com/questions/1099672/when-is-it-appropriate-to-use-udp-instead-of-tcp
