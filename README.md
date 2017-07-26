@@ -51,6 +51,6 @@ When the above are done,
 
 - https://pymotw.com/2/select/
 - https://picamera.readthedocs.io/en/release-1.13/
-
+- http://www.scottklement.com/rpg/socktut/nonblocking.html
 
 
