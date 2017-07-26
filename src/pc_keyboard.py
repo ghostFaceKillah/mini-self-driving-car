@@ -3,39 +3,41 @@ import sys
 import time
 import keyboard
 
+import lib.constant as cnst
+
 # Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Connect the socket to the port where the server is listening
 server_address = ('192.168.192.51', 4567)             # RPI, port 100
 print >>sys.stderr, 'connecting to %s port %s' % server_address
-sock.connect(server_address)
+
+status = {
+  'up_down': None,
+  'left_right': None
+}
 
 
 def send(msg):
     print 'sending "{}"'.format(msg)
-    sock.sendall(msg)
-    pass
+    sock.sendto(msg, server_address)
 
 
 def turn_right():
-    send('rx')
+    status['left_right'] = 'right'
 
 def stop_turning():
-    send('ro')
-
+    status['left_right'] = None
 
 def turn_left():
-    send('lx')
-
+    status['left_right'] = 'left'
 
 def go_forward():
-    send('ux')
+    status['up_down'] = 'forward'
 
 
 def stop():
-    send('uo')
-    print "Stopping the car"
+    status['up_down'] = 'none'
 
 
 def register_hooks():
@@ -50,6 +52,25 @@ try:
     register_hooks()
     while True:
         time.sleep(0.1)
+
+        # Send direction state
+        if status['left_right'] == 'left':
+            msg = cnst.msg('left', 'start')
+        elif status['left_right'] == 'right':
+            msg = cnst.msg('right', 'start')
+        else:
+            msg = cnst.msg('right', 'stop')
+
+        send(msg)
+
+        # Send start stop msg
+        if status['up_down'] == 'forward':
+            msg = cnst.msg('up', 'start')
+        else:
+            msg = cnst.msg('up', 'stop')
+
+        send(msg)
+
 
 finally:
     print >>sys.stderr, 'closing socket'
