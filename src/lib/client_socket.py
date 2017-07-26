@@ -1,7 +1,7 @@
 import socket
 import sys
 
-from constant import DIRECTION, ACTION
+from .constant import DIRECTION, ACTION
 
 class ClientSocket:
     def __init__(self, ip, port, verbose=True):

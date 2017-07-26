@@ -7,7 +7,7 @@ DIRECTION = {
 
 REV_DIRECTION = {
     v: k 
-    for k, v in DIRECTION.iteritems()
+    for k, v in DIRECTION.items()
 }
 
 ACTION = {
@@ -17,7 +17,7 @@ ACTION = {
 
 REV_ACTION = {
     v: k 
-    for k, v in ACTION.iteritems()
+    for k, v in ACTION.items()
 }
 
 RASPI_IP = "192.168.192.51"
