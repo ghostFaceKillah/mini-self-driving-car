@@ -19,7 +19,7 @@ Building a small self driving car
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
 - [ ] Add back gear (wrong wiring on the website!!)
 - [ ] Correct color coding of the main power line :D
-- [ ] How to make steering more reliable? Are we using UDP or sth???
+
 
 When the above are done, 
 - [ ] Implement a driving system
@@ -35,6 +35,7 @@ When the above are done,
 - [X] Check what picamera module is actually doing under the hood
 - [x] make sure to understand the schematic [here](https://business.tutsplus.com/tutorials/controlling-dc-motors-using-python-with-a-raspberry-pi--cms-20051)      
 - [X] Implement steering capture from one computer to another
+- [X] How to make steering more reliable? Are we using UDP or sth???
     
 
 ## Links and resources found around the web
