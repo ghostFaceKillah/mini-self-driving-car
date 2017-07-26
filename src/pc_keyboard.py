@@ -4,18 +4,16 @@ import time
 import keyboard
 
 # Create a TCP/IP socket
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Connect the socket to the port where the server is listening
 server_address = ('192.168.192.51', 4567)             # RPI, port 100
 print >>sys.stderr, 'connecting to %s port %s' % server_address
-sock.connect(server_address)
 
 
 def send(msg):
     print 'sending "{}"'.format(msg)
-    sock.sendall(msg)
-    pass
+    sock.sendto(msg, server_address)
 
 
 def turn_right():

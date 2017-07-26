@@ -5,14 +5,12 @@ from time import sleep
 
 import lib.constant as cnst
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 HOST = socket.gethostbyname(socket.gethostname())
 server_address = ('0.0.0.0', cnst.KEYBOARD_EVENTS_PORT)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
-
-sock.listen(1)
 
 GPIO.setmode(GPIO.BOARD)
 
@@ -86,26 +84,15 @@ def interpret(msg):
         elif action == 'stop':
             stop_turning()
 
-
-
 try: 
     stop()
     stop_turning()
     while True:
         print 'waiting for connections...'
-        connection, client_address = sock.accept()
-        try:
-            print 'connection from {}'.format(client_address)
+        data, client_address = sock.recvfrom(16)
 
-            while True:
-                data = connection.recv(16)
-                print 'received {}'.format(data)
-                interpret(data)
-                if not data:
-                    print 'no more data'
-                    break
-        finally:
-            connection.close()
+        print 'received {} from {}'.format(data, client_address)
+        interpret(data)
 
 finally:
     print "Cleaning up GPIO"
