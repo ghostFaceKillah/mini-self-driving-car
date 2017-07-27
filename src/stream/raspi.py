@@ -24,7 +24,7 @@ class SplitFrames(object):
                 self.stream.seek(0)
         self.stream.write(buf)
 
-client_socket = socket.socket()
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client_socket.connect(('192.168.192.60', 8000))
 connection = client_socket.makefile('wb')
 try:
