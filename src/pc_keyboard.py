@@ -26,11 +26,14 @@ def send(msg):
 def turn_right():
     status['left_right'] = 'right'
 
+
 def stop_turning():
     status['left_right'] = None
 
+
 def turn_left():
     status['left_right'] = 'left'
+
 
 def go_forward():
     status['up_down'] = 'forward'
