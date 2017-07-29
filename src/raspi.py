@@ -13,13 +13,13 @@ sock.bind(server_address)
 
 GPIO.setmode(GPIO.BOARD)
 
-Motor1A = 36  # 16
-Motor1B = 38  # 18
-Motor1E = 40  # 22
+Motor1A = 33    
+Motor1B = 35
+Motor1E = 37
 
-Motor2A = 37  # 23
-Motor2B = 35  # 21
-Motor2E = 33  # 19
+Motor2A = 38
+Motor2B = 40
+Motor2E = 36
 
 GPIO.setup(Motor1A, GPIO.OUT)
 GPIO.setup(Motor1B, GPIO.OUT)
@@ -53,6 +53,14 @@ def go_forward():
     GPIO.output(Motor2B, GPIO.LOW)
     GPIO.output(Motor2E, GPIO.HIGH)
 
+
+def go_back():
+    print "Going back"
+    GPIO.output(Motor2A, GPIO.LOW)
+    GPIO.output(Motor2B, GPIO.HIGH)
+    GPIO.output(Motor2E, GPIO.HIGH)
+
+
 def stop():
     print "Stopping the car"
     GPIO.output(Motor2E, GPIO.LOW)
@@ -69,7 +77,10 @@ def interpret(msg):
             stop()
 
     elif direction == 'down':
-        print "Cant go back for now, ignoring"
+        if action == 'start':
+            go_back()
+        elif action == 'stop':
+            stop()
 
     elif direction == 'right':
         if action == 'start':
