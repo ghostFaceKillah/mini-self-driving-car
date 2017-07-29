@@ -55,3 +55,6 @@ When the above are done,
 - http://www.scottklement.com/rpg/socktut/nonblocking.html
 - https://stackoverflow.com/questions/10654286/why-should-i-use-non-blocking-or-blocking-sockets
 - https://stackoverflow.com/questions/1099672/when-is-it-appropriate-to-use-udp-instead-of-tcp
+
+Some person using interesting ultrasound sensor for obstacle detection
+- http://www.bajdi.com/obstacle-avoiding-robot-made-from-cheap-parts/
