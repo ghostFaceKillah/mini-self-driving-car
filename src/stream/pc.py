@@ -17,26 +17,21 @@ try:
     stream_bytes = ' '
     while True:
         image = None
-        try: 
-            print "Trying to parse image"
-            data, client_address = sock.recvfrom(1024)
-            stream_bytes += data
-            first = stream_bytes.find('\xff\xd8')
-            last = stream_bytes.find('\xff\xd9')
-            if first != -1 and last != -1:
-                jpg = stream_bytes[first:last + 2]
-                stream_bytes = stream_bytes[last + 2:]
-                image = cv2.imdecode(
-                    np.fromstring(jpg, dtype=np.uint8),
-                    cv2.IMREAD_UNCHANGED
-                )
-                image = cv2.flip(image, -1)
+        print "Trying to parse image"
+        data = server_socket.recv(131072)
+        stream_bytes += data
+        first = stream_bytes.find('\xff\xd8')
+        last = stream_bytes.find('\xff\xd9')
+        if first != -1 and last != -1:
+            jpg = stream_bytes[first:last + 2]
+            stream_bytes = stream_bytes[last + 2:]
+            image = cv2.imdecode(
+                np.fromstring(jpg, dtype=np.uint8),
+                cv2.IMREAD_UNCHANGED
+            )
+            image = cv2.flip(image, -1)
 
-                cv2.imshow('image', image)
-        except:
-            print "Parsing image failed"
-        finally:
-            print "Done..."
+            cv2.imshow('image', image)
 
 finally:
     server_socket.close()
