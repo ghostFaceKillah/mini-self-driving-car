@@ -9,23 +9,24 @@ Building a small self driving car
 
 ## Stuff to figure out
 
-#### Goal for now: Live wifi-based control from keyboard of GPU computer, very low latency, so driving the car around house is fun
-- [ ] upload simplified schematic of motor control board to this repo
+#### Goal for now: (Picture, steering) tuple capture software - tested, deployed. Resilent hardware version.
+- [ ] upload simplified schematic of motor control board to this repo (can be done via fritzing)
 - [ ] more civilised way to turn off RPI
 - [ ] how to make breadboard host for L293 chip more resistant:
     - [ ] perhaps figure out how to make your own PCB?
           PCBs can be ordered in low quantities from [OSHPark](https://oshpark.com/)
 - [ ] Make more resillent hardware structure (how to mount Rpi camera??)
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
-- [ ] Add back gear (wrong wiring on the website!!)
 - [ ] Correct color coding of the main power line :D
 
 
 When the above are done, 
-- [ ] Implement a driving system
+- [X] Implement driving system
 - [ ] Figure out how to capture testing data        
 
 ### DONE (saved here for further motivation)
+######  Live wifi-based control from keyboard of GPU computer, very low latency, so driving the car around house is fun
+- [X] Add back gear (wrong wiring on the website!!)
 - [X] Reimplement the hardware control with bigger car, as the old one is too small...
 - [x] figure out how to power the whole car
 - [X] figure out how to stream video over wifi from raspi to gpu computer FAST
@@ -57,4 +58,8 @@ When the above are done,
 - https://stackoverflow.com/questions/1099672/when-is-it-appropriate-to-use-udp-instead-of-tcp
 
 Some person using interesting ultrasound sensor for obstacle detection
-- http://www.bajdi.com/obstacle-avoiding-robot-made-from-cheap-parts/
+- http://www.bajdi.com/obstacle-avoiding-robot-made-from-cheap-parts
+
+Open source breadboard-to-PCB software
+
+http://fritzing.org/home/
