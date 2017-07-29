@@ -5,12 +5,11 @@ import keyboard
 
 import lib.constant as cnst
 
-# Create a TCP/IP socket
+# Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 # Connect the socket to the port where the server is listening
-server_address = ('192.168.192.51', 4567)             # RPI, port 100
-print >>sys.stderr, 'connecting to %s port %s' % server_address
+server_address = cnst.RASPI_IP, cnst.KEYBOARD_EVENTS_PORT
 
 status = {
   'up_down': None,

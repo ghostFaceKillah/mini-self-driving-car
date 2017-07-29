@@ -24,12 +24,12 @@ class SplitFrames(object):
                 self.stream.seek(0)
         self.stream.write(buf)
 
-client_socket = socket.socket()
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 client_socket.connect(('192.168.192.60', 8000))
 connection = client_socket.makefile('wb')
 try:
     output = SplitFrames(connection)
-    with picamera.PiCamera(resolution='VGA', framerate=25) as camera:
+    with picamera.PiCamera(resolution=(640, 480), framerate=25) as camera:
         time.sleep(2)
         start = time.time()
         camera.start_recording(output, format='mjpeg')
@@ -39,7 +39,6 @@ try:
         # server know we're done
         connection.write(struct.pack('<L', 0))
 finally:
-    connection.close()
     client_socket.close()
     finish = time.time()
 print('Sent %d images in %d seconds at %.2ffps' % (

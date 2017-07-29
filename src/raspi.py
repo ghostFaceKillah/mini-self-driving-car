@@ -7,7 +7,6 @@ import lib.constant as cnst
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-HOST = socket.gethostbyname(socket.gethostname())
 server_address = ('0.0.0.0', cnst.KEYBOARD_EVENTS_PORT)
 print >>sys.stderr, 'starting up on %s port %s' % server_address
 sock.bind(server_address)
