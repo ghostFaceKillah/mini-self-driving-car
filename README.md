@@ -10,12 +10,14 @@ Building a small self driving car
 ## Stuff to figure out
 
 #### Goal for now: (Picture, steering) tuple capture software - tested, deployed. Resilent hardware version.
-- [ ] upload simplified schematic of motor control board to this repo (can be done via fritzing)
+- [ ] glue the camera holder in a better way
+- [ ] improve stability of the video stream
+
+- [ ] upload simplified & corrected schematic of motor control board to this repo (can be done via fritzing)
 - [ ] more civilised way to turn off RPI
 - [ ] how to make breadboard host for L293 chip more resistant:
-    - [ ] perhaps figure out how to make your own PCB?
-          PCBs can be ordered in low quantities from [OSHPark](https://oshpark.com/)
-- [ ] Make more resillent hardware structure (how to mount Rpi camera??)
+    - PCB can be designed using for example [fritzing](fritzing.org)
+    - PCBs can be ordered in low quantities from [OSHPark](https://oshpark.com/) (recommended a lot), and [some other places] (https://www.seeedstudio.com/)
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
 - [ ] Correct color coding of the main power line :D
 
