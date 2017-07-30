@@ -65,3 +65,6 @@ Some person using interesting ultrasound sensor for obstacle detection
 Open source breadboard-to-PCB software
 
 http://fritzing.org/home/
+
+High power WiFi
+https://sparkyflight.wordpress.com/2015/07/31/5ghz-wifi-on-the-raspberry-pi-2/
