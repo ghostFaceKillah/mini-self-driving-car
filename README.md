@@ -10,9 +10,8 @@ Building a small self driving car
 ## Stuff to figure out
 
 #### Goal for now: (Picture, steering) tuple capture software - tested, deployed. Resilent hardware version.
-- [ ] glue the camera holder in a better way
-- [ ] improve stability of the video stream
 
+- [ ] improve stability of the video stream
 - [ ] upload simplified & corrected schematic of motor control board to this repo (can be done via fritzing)
 - [ ] more civilised way to turn off RPI
 - [ ] how to make breadboard host for L293 chip more resistant:
@@ -28,6 +27,7 @@ When the above are done,
 
 ### DONE (saved here for further motivation)
 ######  Live wifi-based control from keyboard of GPU computer, very low latency, so driving the car around house is fun
+- [X] glue the camera holder in a better way
 - [X] Add back gear (wrong wiring on the website!!)
 - [X] Reimplement the hardware control with bigger car, as the old one is too small...
 - [x] figure out how to power the whole car
