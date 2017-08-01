@@ -66,5 +66,8 @@ Open source breadboard-to-PCB software
 
 http://fritzing.org/home/
 
-High power WiFi
+How to High power WiFi + RasPi
 https://sparkyflight.wordpress.com/2015/07/31/5ghz-wifi-on-the-raspberry-pi-2/
+
+A list of RasPi supported Wifi interfaces
+http://elinux.org/RPi_USB_Wi-Fi_Adapters
