@@ -71,3 +71,6 @@ https://sparkyflight.wordpress.com/2015/07/31/5ghz-wifi-on-the-raspberry-pi-2/
 
 A list of RasPi supported Wifi interfaces
 http://elinux.org/RPi_USB_Wi-Fi_Adapters
+
+A guy says one hi-gain interface is good
+http://kamilslab.com/2016/01/15/best-5-wifi-adapters-for-the-raspberry-pi-2016/
