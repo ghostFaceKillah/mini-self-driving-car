@@ -2,7 +2,7 @@ import socket
 import sys
 import RPi.GPIO as GPIO
 from time import sleep 
-import constant as cnst
+import lib.constant as cnst
 
 import threading
 
@@ -27,66 +27,68 @@ def setupGPIO():
 
 class RpiDriver(threading.Thread):
     def __init__(self, port):
+        threading.Thread.__init__(self)
         print('setting up GPIO')
         setupGPIO()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.server_address = ('0.0.0.0', port)
-        sock.bind(self.server_address)
+        self.sock.bind(self.server_address)
     
     def listen(self):
-        print('starting up on {}'.format(self.server_address),
-              file=sys.stderr)
+        print('starting up on {}'.format(self.server_address))
         self.sock.listen(1)
 
     def run(self):
+        self.listen()
         try: 
             while True:
-                print 'waiting for connections...'
+                print('waiting for connections...')
                 connection, client_address = self.sock.accept()
                 try:
-                    print 'connection from {}'.format(client_address)
+                    print('connection from {}'.format(client_address))
         
                     while True:
                         data = connection.recv(16)
-                        print 'received {}'.format(data)
+                        print('received {}'.format(data))
                         interpret(data)
                         if not data:
-                            print 'no more data'
+                            print('no more data')
                             break
                 finally:
                     connection.close()
         
         finally:
-            print "Cleaning up GPIO"
+            print("Cleaning up GPIO")
             GPIO.cleanup()
 
 def turn_right():
-    print "Turning the steering right"
+    print("Turning the steering right")
     GPIO.output(Motor1A, GPIO.HIGH)
     GPIO.output(Motor1B, GPIO.LOW)
     GPIO.output(Motor1E, GPIO.HIGH)
 
 def stop_turning():
-    print "Stopping motor"
+    print("Stopping motor")
     GPIO.output(Motor1E, GPIO.LOW)
 
 
 def turn_left():
-    print "Turning the steering left"
+    print("Turning the steering left")
     GPIO.output(Motor1A, GPIO.LOW)
     GPIO.output(Motor1B, GPIO.HIGH)
     GPIO.output(Motor1E, GPIO.HIGH)
 
 
 def go_forward():
-    print "Going forward"
+    print("Going forward")
     GPIO.output(Motor2A, GPIO.HIGH)
     GPIO.output(Motor2B, GPIO.LOW)
     GPIO.output(Motor2E, GPIO.HIGH)
 
 def stop():
-    print "Stopping the car"
+    print("Stopping the car")
     GPIO.output(Motor2E, GPIO.LOW)
 
 
@@ -101,7 +103,7 @@ def interpret(msg):
             stop()
 
     elif direction == 'down':
-        print "Cant go back for now, ignoring"
+        print("Cant go back for now, ignoring")
 
     elif direction == 'right':
         if action == 'start':

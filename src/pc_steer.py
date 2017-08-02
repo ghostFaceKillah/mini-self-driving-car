@@ -28,6 +28,7 @@ def keyup(event):
 
 class PygameDriver(threading.Thread):
     def __init__(self, ip, port, window_size):
+        threading.Thread.__init__(self)
         print('Starting pygame window, size: {}'.format(window_size),
               file=sys.stderr)
         pygame.init()
