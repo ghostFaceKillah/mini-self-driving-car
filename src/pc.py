@@ -1,4 +1,4 @@
-from pc_steer.py import PygameDriver
+from pc_steer import PygameDriver
 import lib.constant as cnst
 
 driver = PygameDriver(cnst.RASPI_IP, cnst.KEYBOARD_EVENTS_PORT,

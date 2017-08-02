@@ -5,25 +5,6 @@ import threading
 from lib.client_socket import ClientSocket
 from lib.constant import *
 
-def keydown(event):
-    if event.key == pygame.K_UP:
-        sock.sendCmd('up', 'start')
-    if event.key == pygame.K_DOWN:
-        sock.sendCmd('down', 'start')
-    if event.key == pygame.K_RIGHT:
-        sock.sendCmd('right', 'start')
-    if event.key == pygame.K_LEFT:
-        sock.sendCmd('left', 'start')
-
-def keyup(event):
-    if event.key == pygame.K_UP:
-        sock.sendCmd('up', 'stop')
-    if event.key == pygame.K_DOWN:
-        sock.sendCmd('down', 'stop')
-    if event.key == pygame.K_RIGHT:
-        sock.sendCmd('right', 'stop')
-    if event.key == pygame.K_LEFT:
-        sock.sendCmd('left', 'stop')
 
 
 class PygameDriver(threading.Thread):
@@ -41,6 +22,26 @@ class PygameDriver(threading.Thread):
               file=sys.stderr)
         self.sock.connect()
 
+    def keydown(self, event):
+        if event.key == pygame.K_UP:
+            self.sock.sendCmd('up', 'start')
+        if event.key == pygame.K_DOWN:
+            self.sock.sendCmd('down', 'start')
+        if event.key == pygame.K_RIGHT:
+            self.sock.sendCmd('right', 'start')
+        if event.key == pygame.K_LEFT:
+            self.sock.sendCmd('left', 'start')
+    
+    def keyup(self, event):
+        if event.key == pygame.K_UP:
+            self.sock.sendCmd('up', 'stop')
+        if event.key == pygame.K_DOWN:
+            self.sock.sendCmd('down', 'stop')
+        if event.key == pygame.K_RIGHT:
+            self.sock.sendCmd('right', 'stop')
+        if event.key == pygame.K_LEFT:
+            self.sock.sendCmd('left', 'stop')
+
     def run(self):
         self.connect()
         while True:
@@ -48,6 +49,6 @@ class PygameDriver(threading.Thread):
                 if event.type == pygame.QUIT:
                     break
                 if event.type == pygame.KEYDOWN:
-                    keydown(event)
+                    self.keydown(event)
                 if event.type == pygame.KEYUP:
-                    keyup(event)
+                    self.keyup(event)
