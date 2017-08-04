@@ -5,17 +5,17 @@ from time import sleep
 import lib.constant as cnst
 
 import threading
+    
+Motor1A = 36  # 16
+Motor1B = 38  # 18
+Motor1E = 40  # 22
+
+Motor2A = 37  # 23
+Motor2B = 35  # 21
+Motor2E = 33  # 19
 
 def setupGPIO():
     GPIO.setmode(GPIO.BOARD)
-    
-    Motor1A = 36  # 16
-    Motor1B = 38  # 18
-    Motor1E = 40  # 22
-    
-    Motor2A = 37  # 23
-    Motor2B = 35  # 21
-    Motor2E = 33  # 19
     
     GPIO.setup(Motor1A, GPIO.OUT)
     GPIO.setup(Motor1B, GPIO.OUT)
@@ -52,7 +52,7 @@ class RpiDriver(threading.Thread):
                     while True:
                         data = connection.recv(16)
                         print('received {}'.format(data))
-                        interpret(data)
+                        interpret(data.decode("utf-8"))
                         if not data:
                             print('no more data')
                             break
