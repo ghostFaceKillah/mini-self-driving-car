@@ -1,3 +1,30 @@
+import multiprocessing
+
+import lib.constant as cnst
+import lib.state as state
+
+
+the_state = {
+    state.StatePart.lock: multiprocessing.Lock(),
+    state.StatePart.image: None,
+    state.StatePart.keyboard: {
+        state.Axis.up_down: None,
+        state.Axis.left_right: None
+    }
+}
+
+
+
+if __name__ == '__main__':
+    pygame_handler = PygameHandler()
+    pygame_handler.start()
+    pygame_handler.join()
+
+
+#########################################################################
+
+
+
 from pc_steer import PygameDriver
 from pc_stream import PygameStreamClient
 
