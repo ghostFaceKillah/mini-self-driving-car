@@ -9,6 +9,7 @@ Questions to be answered:
        I think syncronisation can be done in general. Look it up.
 """
 
+import pygame
 import multiprocessing
 import sys
 
@@ -63,13 +64,14 @@ class PygameHandler(multiprocessing.Process):
 
 
     def __init__(self):
-        import pygame
+        super(PygameHandler, self).__init__()
         pygame.init()
         pygame.display.set_mode((640, 480))
+        pass
 
     def set_keyboard_state(self, direction, action):
         with state_lock:
-            print "Updated state"
+            print("Updated state")
 
     def keydown(self, event):
         if event.key == pygame.K_UP:
@@ -92,7 +94,7 @@ class PygameHandler(multiprocessing.Process):
             self.set_keyboard_state('left', 'stop')
 
     def run(self):
-        print "entering"
+        print("entering")
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
