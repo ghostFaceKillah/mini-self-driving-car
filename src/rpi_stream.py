@@ -26,7 +26,7 @@ class SplitFrames(object):
                 self.stream.seek(0)
         self.stream.write(buf)
 
-class PiStreamer(threading.Thread):
+class RpiStreamer(threading.Thread):
     def __init__(self, port):
         threading.Thread.__init__(self)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -38,6 +38,7 @@ class PiStreamer(threading.Thread):
         self.sock.listen(1)
 
         self.client_socket, self.client_address = self.sock.accept()
+        print('accepted connection from {}'.format(self.client_address))
         self.connection = self.client_socket.makefile('wb')
 
     def run(self):
