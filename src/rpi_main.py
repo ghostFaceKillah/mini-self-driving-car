@@ -1,13 +1,17 @@
 from raspi.steering import Steering
+from raspi.video import VideoStreaming
 
 
-driver = Steering()
+# driver = Steering()
 # streamer = RpiStreamer(cnst.VIDEOS_STREAMING_PORT)
+streamer = VideoStreaming()
 
-print('starting driver thread')
-driver.start()
+streamer.start()
 
-driver.join()
+# print('starting driver thread')
+# driver.start()
+
+# driver.join()
 
 # print('starting streamer thread')
 # streamer.start()
