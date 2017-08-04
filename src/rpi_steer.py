@@ -52,10 +52,10 @@ class RpiDriver(threading.Thread):
                     while True:
                         data = connection.recv(16)
                         print('received {}'.format(data))
-                        interpret(data)
+                        interpret(data.decode(cnst.ENCODING)
                         if not data:
                             print('no more data')
-                            break
+                            raise Exception('get caught')
                 finally:
                     connection.close()
         
