@@ -6,13 +6,13 @@ import lib.constant as cnst
 
 import threading
     
-Motor1A = 36  # 16
-Motor1B = 38  # 18
-Motor1E = 40  # 22
+Motor1A = 33  # 16
+Motor1B = 35  # 18
+Motor1E = 37  # 22
 
-Motor2A = 37  # 23
-Motor2B = 35  # 21
-Motor2E = 33  # 19
+Motor2A = 38  # 23
+Motor2B = 40  # 21
+Motor2E = 36  # 19
 
 def setupGPIO():
     GPIO.setmode(GPIO.BOARD)

@@ -22,7 +22,7 @@ class ClientSocket:
             print('sending message: {}'.format(message))
         try:
             self.sock.sendall(bytes(message, ENCODING))
-        finally:
+        except:
             print('did not manage to send message')
 
     def sendCmd(self, direction, action):
