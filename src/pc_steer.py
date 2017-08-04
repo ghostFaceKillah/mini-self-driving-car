@@ -8,14 +8,11 @@ from lib.constant import *
 
 
 class PygameDriver(threading.Thread):
-    def __init__(self, ip, port, window_size):
+    def __init__(self, ip, port, window_size, pgscreen):
         threading.Thread.__init__(self)
-        print('Starting pygame window, size: {}'.format(window_size),
-              file=sys.stderr)
-        pygame.init()
-        pygame.display.set_mode(window_size)
 
         self.sock = ClientSocket(ip, port, True)
+        self.screen = pgscreen
 
     def connect(self):
         print('Connecting to steering server',
