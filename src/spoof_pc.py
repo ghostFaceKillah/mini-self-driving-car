@@ -60,8 +60,27 @@ class PygameHandler(multiprocessing.Process):
     1) on keyboard event, update state
     2) update pygame screen at set frequency,
        based on state
-    """
 
+    import cv2
+    import ipdb
+    import numpy as np
+    import pygame
+    import time
+
+    pygame.init()
+    screen = pygame.display.set_mode((640, 480))
+
+    img = cv2.imread('example.jpg')
+    img = np.transpose(img, axes=(1, 0, 2))
+
+    screen.blit(pygame.surfarray.make_surface(img), (0, 0))
+    pygame.display.flip()
+
+
+    while True:
+    time.sleep(0.2)
+
+    """
 
     def __init__(self):
         super(PygameHandler, self).__init__()
@@ -94,7 +113,6 @@ class PygameHandler(multiprocessing.Process):
             self.set_keyboard_state('left', 'stop')
 
     def run(self):
-        print("entering")
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
