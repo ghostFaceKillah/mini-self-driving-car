@@ -38,13 +38,18 @@ def go_forward():
     status['up_down'] = 'forward'
 
 
+def go_back():
+    status['up_down'] = 'back'
+
+
 def stop():
-    status['up_down'] = 'none'
+    status['up_down'] = None
 
 
 def register_hooks():
     print "Registering hooks"
     keyboard.hook_key('up', keydown_callback=go_forward, keyup_callback=stop)
+    keyboard.hook_key('down', keydown_callback=go_back, keyup_callback=stop)
     keyboard.hook_key('left', keydown_callback=turn_left, keyup_callback=stop_turning)
     keyboard.hook_key('right', keydown_callback=turn_right, keyup_callback=stop_turning)
     print "Hooks registered"
@@ -68,6 +73,8 @@ try:
         # Send start stop msg
         if status['up_down'] == 'forward':
             msg = cnst.msg('up', 'start')
+        elif status['up_down'] == 'back':
+            msg = cnst.msg('down', 'start')
         else:
             msg = cnst.msg('up', 'stop')
 
@@ -77,4 +84,3 @@ try:
 finally:
     print >>sys.stderr, 'closing socket'
     sock.close()
-
