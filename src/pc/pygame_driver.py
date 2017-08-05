@@ -76,4 +76,3 @@ class PygameDriver(multiprocessing.Process):
         while True:
             self.handle_key_events()
             self.display_image()
-            time.sleep(0.1)
