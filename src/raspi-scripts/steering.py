@@ -93,7 +93,7 @@ try:
     while True:
         data, client_address = sock.recvfrom(16)
 
-        interpret(data)
+        interpret(data.decode(cnst.ENCODING))
 
 finally:
     GPIO.cleanup()
