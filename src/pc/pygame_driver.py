@@ -33,9 +33,9 @@ class PygameDriver(multiprocessing.Process):
         self.logger.info('Connecting to steering server...')
         self.logger.info('Done')
 
-
     def keydown(self, event):
         """ Handle pressing key down """
+        print "Keybown event"
         if event.key == pygame.K_UP:
             self.state.vertical = state.Vertical.up
         if event.key == pygame.K_DOWN:
@@ -47,6 +47,7 @@ class PygameDriver(multiprocessing.Process):
 
     def keyup(self, event):
         """ Handle key release """
+        print "Key up event"
         if event.key in [pygame.K_UP, pygame.K_DOWN]:
             self.state.vertical = state.Vertical.nothing
         if event.key in [pygame.K_RIGHT, pygame.K_LEFT]:

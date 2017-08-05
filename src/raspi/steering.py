@@ -40,18 +40,16 @@ def interpret(msg):
             gpio.stop_turning()
 
 
+class Steering(multiprocessing.Process):
 
-def task():
-    try:
-        gpio.init()
-        while True:
-            data, client_address = sock.recvfrom(16)
+    def run(self):
+        try:
+            gpio.init()
+            while True:
+                data, client_address = sock.recvfrom(16)
 
-            print 'received {} from {}'.format(data, client_address)
-            interpret(data)
+                print 'received {} from {}'.format(data, client_address)
+                interpret(data)
 
-    finally:
-        gpio.clean_up()
-
-
-Steering = multiprocessing.Process(target=task)
+        finally:
+            gpio.clean_up()

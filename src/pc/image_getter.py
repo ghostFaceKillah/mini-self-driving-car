@@ -6,6 +6,7 @@ import numpy as np
 
 import lib.constant as cnst
 
+
 class VideoStreamClient(threading.Thread):
     """
     Gets the image from the wire, writes it to the state.
@@ -24,10 +25,12 @@ class VideoStreamClient(threading.Thread):
             np.fromstring(jpg, dtype=np.uint8),
             cv2.IMREAD_UNCHANGED
         )
+
         image = cv2.flip(image, -1)
         image = np.transpose(image, axes=(1, 0, 2))
-        self.state.image = image
+        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
+        self.state.image = image
 
     def run(self):
         # TODO(all): Refactor!

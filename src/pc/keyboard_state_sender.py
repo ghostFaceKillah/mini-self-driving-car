@@ -1,4 +1,9 @@
 import multiprocessing
+import socket
+import time
+
+import lib.constant as cnst
+import lib.state as state
 
 
 class KeyboardSender(multiprocessing.Process):
@@ -10,33 +15,36 @@ class KeyboardSender(multiprocessing.Process):
             keyboard_state = state.keyboard_state
             send_keyboard_state_to_raspi
     """
-
     def __init__(self, the_state):
         super(KeyboardSender, self).__init__()
         self.state = the_state
 
+        # Create a UDP socket
+        self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    def send(self, msg):
+        self.sock.sendto(msg, (cnst.RASPI_IP, cnst.STEERING_PORT))
 
     def run(self):
-
         while True:
             time.sleep(0.1)
 
             # Send direction state
-            if status['left_right'] == 'left':
+            if self.state.horizontal == state.Horizontal.left:
                 msg = cnst.msg('left', 'start')
-            elif status['left_right'] == 'right':
+            elif self.state.horizontal == state.Horizontal.right:
                 msg = cnst.msg('right', 'start')
             else:
                 msg = cnst.msg('right', 'stop')
 
-            send(msg)
+            self.send(msg)
 
             # Send start stop msg
-            if status['up_down'] == 'forward':
+            if self.state.vertical ==  state.Vertical.up:
                 msg = cnst.msg('up', 'start')
-            elif status['up_down'] == 'back':
+            elif self.state.vertical ==  state.Vertical.down:
                 msg = cnst.msg('down', 'start')
             else:
                 msg = cnst.msg('up', 'stop')
 
-            send(msg)
+            self.send(msg)
