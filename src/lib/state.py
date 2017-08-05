@@ -25,11 +25,12 @@ class TheState():
 
     def set_image(self, img):
         with self.img_lock:
-            self.img = img
+            self.img = img.copy()
 
     def get_image(self):
         with self.img_lock:
-            return self.img
+            if self.img is not None:
+                return self.img.copy()
 
     def get_steering(self):
         with self.keyboard_lock:

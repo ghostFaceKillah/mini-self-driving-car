@@ -6,7 +6,7 @@ import numpy as np
 
 import lib.constant as cnst
 
-class PygameStreamClient(threading.Thread):
+class VideoStreamClient(threading.Thread):
     """
     Gets the image from the wire, writes it to the state.
     """
@@ -25,15 +25,15 @@ class PygameStreamClient(threading.Thread):
             cv2.IMREAD_UNCHANGED
         )
         image = cv2.flip(image, -1)
-        self.state.set_image(image)
+        image = np.transpose(image, axes=(1, 0, 2))
+        self.state.image = image
+
 
     def run(self):
         # TODO(all): Refactor!
         try:
             stream_bytes = b' '
             while True:
-                print("Trying to parse image")
-
                 # Read data from wire
                 data = self.sock.recv(131072)
                 stream_bytes += data
