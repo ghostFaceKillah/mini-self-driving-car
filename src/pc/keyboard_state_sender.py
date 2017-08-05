@@ -23,7 +23,10 @@ class KeyboardSender(multiprocessing.Process):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
     def send(self, msg):
-        self.sock.sendto(msg, (cnst.RASPI_IP, cnst.STEERING_PORT))
+        self.sock.sendto(
+            bytes(msg, encoding=cnst.ENCODING),
+            (cnst.RASPI_IP, cnst.STEERING_PORT)
+        )
 
     def run(self):
         while True:
