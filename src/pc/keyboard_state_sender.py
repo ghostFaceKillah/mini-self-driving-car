@@ -52,7 +52,6 @@ class KeyboardSender(multiprocessing.Process):
 
             self.send(msg)
 
-            print(self.state.done)
             if self.state.done:
                 print('exiting keyboard state sender')
                 break

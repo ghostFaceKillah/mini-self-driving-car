@@ -15,6 +15,7 @@ class VideoStreamClient(multiprocessing.Process):
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind(('0.0.0.0', cnst.VIDEOS_STREAMING_PORT))
+        # self.sock.setblocking(0)
         self.state = the_state
 
     def parse_image(self, stream_bytes, first, last):
@@ -46,7 +47,6 @@ class VideoStreamClient(multiprocessing.Process):
                     self.parse_image(stream_bytes, first, last)
                     stream_bytes = stream_bytes[last + 2:]
 
-                print(self.state.done)
                 if self.state.done:
                     print('exiting image getter')
                     break

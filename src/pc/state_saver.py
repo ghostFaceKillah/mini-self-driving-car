@@ -64,10 +64,14 @@ class StateSaver(multiprocessing.Process):
         try:
             while True:
                 time.sleep(0.1)
-
                 self.counter += 1
-
                 self.write_data_dot()
+
+                if self.state.done:
+                    self.file.flush()
+                    self.file.close()
+                    print("Exiting state saver")
+                    break
 
         except:
             self.file.flush()
