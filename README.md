@@ -8,16 +8,24 @@ Building a small self driving car!
 
 
 ##### Software
-- [ ] Improve the quality of code 
+- [ ] Improve the quality of code:
+   - Comment
+   - General code quality (read through and think)
+   - Abstract socket
+   - Catch typical unhandled exceptions on Raspi side
+   - Catch typical unhandled exceptions on PC side
+
 
 
 ##### Machine learning
+- [ ] Prepare track
 - [ ] Gather data
 - [ ] Write a model
 - [ ] Train the model
 
 
 ##### Hardware
+- [ ] Attach the pi camera in a sturdy way
 - [ ] more civilised way to turn off RPI
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
 - [ ] Correct color coding of the main power line :D
