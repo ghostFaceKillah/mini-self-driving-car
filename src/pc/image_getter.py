@@ -1,5 +1,4 @@
-import threading
-import subprocess
+import multiprocessing
 import socket
 import cv2
 import numpy as np
@@ -7,15 +6,16 @@ import numpy as np
 import lib.constant as cnst
 
 
-class VideoStreamClient(threading.Thread):
+class VideoStreamClient(multiprocessing.Process):
     """
     Gets the image from the wire, writes it to the state.
     """
     def __init__(self, the_state):
-        threading.Thread.__init__(self)
+        super(VideoStreamClient, self).__init__()
 
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind(('0.0.0.0', cnst.VIDEOS_STREAMING_PORT))
+        self.sock.setblocking(0)
         self.state = the_state
 
     def parse_image(self, stream_bytes, first, last):
@@ -49,19 +49,10 @@ class VideoStreamClient(threading.Thread):
                     self.parse_image(stream_bytes, first, last)
                     stream_bytes = stream_bytes[last + 2:]
 
+                print(self.state.done)
+                if self.state.done:
+                    print('exiting image getter')
+                    break
+
         finally:
             self.sock.close()
-
-
-class VlcStreamClient(threading.Thread):
-    def __init__(self, ip, port):
-        threading.Thread.__init__(self)
-        self.ip = ip
-        self.port = port
-        cv2.startWindowThread()
-        cv2.namedWindow('image')
-
-
-    def run(self):
-        vlc = ['vlc', 'tcp/h264://{}:{}/'.format(self.ip, self.port)]
-        subprocess.Popen(vlc)

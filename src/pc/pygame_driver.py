@@ -1,6 +1,7 @@
 import multiprocessing
 import pygame
 import time
+import sys
 
 import lib.constant as cnst
 import lib.log as log
@@ -22,8 +23,6 @@ class PygameDriver(multiprocessing.Process):
         self.logger = log.get(__name__)
         self.logger.info("Initializing...")
 
-        pygame.init()
-        self.screen = pygame.display.set_mode(cnst.VIDEO_RESOLUTION)
         self.state = the_state
 
         self.logger.info("Done.")
@@ -55,8 +54,8 @@ class PygameDriver(multiprocessing.Process):
         """ Wrapper for handling key events """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                pygame.quit()
-                break
+                self.state.done = True
+                return
             if event.type == pygame.KEYDOWN:
                 self.keydown(event)
             if event.type == pygame.KEYUP:
@@ -71,7 +70,14 @@ class PygameDriver(multiprocessing.Process):
 
     def run(self):
         """ Main function of this object """
+        pygame.init()
+        self.screen = pygame.display.set_mode(cnst.VIDEO_RESOLUTION)
         self.connect()
         while True:
             self.handle_key_events()
-            self.display_image()
+            if self.state.done:
+                print('exiting PyGame thread')
+                pygame.display.quit()
+                pygame.quit()
+                return
+            # self.display_image()
