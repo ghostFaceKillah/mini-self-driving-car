@@ -74,3 +74,16 @@ http://elinux.org/RPi_USB_Wi-Fi_Adapters
 
 A guy says one hi-gain interface is good
 http://kamilslab.com/2016/01/15/best-5-wifi-adapters-for-the-raspberry-pi-2016/
+
+
+
+## Misc
+
+How to quickly kill a process using port 8000 in Linux?
+
+```
+fuser -k 8000/udp
+```
+
+
+
