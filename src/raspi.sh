@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
-python3 raspi-scripts/steering.py &
-python3 raspi-scripts/video.py &
+python3 -m raspi-scripts.steering &
+python3 -m raspi-scripts.video.py &

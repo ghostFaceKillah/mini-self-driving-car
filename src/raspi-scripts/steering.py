@@ -1,8 +1,7 @@
 import socket
 import sys
 import RPi.GPIO as GPIO
-from time import sleep
-
+from time import sleep 
 import lib.constant as cnst
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
