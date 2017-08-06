@@ -1,6 +1,7 @@
+import cv2
 import multiprocessing
+import numpy as np
 import pygame
-import time
 
 import lib.constant as cnst
 import lib.log as log
@@ -23,7 +24,7 @@ class PygameDriver(multiprocessing.Process):
         self.logger.info("Initializing...")
 
         pygame.init()
-        self.screen = pygame.display.set_mode(cnst.VIDEO_RESOLUTION)
+        self.screen = pygame.display.set_mode(cnst.DISPLAY_VIDEO_RESOLUITION)
         self.state = the_state
 
         self.logger.info("Done.")
@@ -66,6 +67,15 @@ class PygameDriver(multiprocessing.Process):
         """ Handles whole image displaying process """
         img = self.state.image
         if img is not None:
+
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            img = cv2.resize(
+                img,
+                cnst.DISPLAY_VIDEO_RESOLUITION,
+                interpolation=cv2.INTER_CUBIC
+            )
+            img = np.transpose(img, axes=(1, 0, 2))
+
             self.screen.blit(pygame.surfarray.make_surface(img), (0, 0))
             pygame.display.flip()
 

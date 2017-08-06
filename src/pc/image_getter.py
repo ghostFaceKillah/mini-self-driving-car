@@ -27,8 +27,6 @@ class VideoStreamClient(threading.Thread):
         )
 
         image = cv2.flip(image, -1)
-        image = np.transpose(image, axes=(1, 0, 2))
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
         self.state.image = image
 
@@ -60,7 +58,6 @@ class VlcStreamClient(threading.Thread):
         self.port = port
         cv2.startWindowThread()
         cv2.namedWindow('image')
-
 
     def run(self):
         vlc = ['vlc', 'tcp/h264://{}:{}/'.format(self.ip, self.port)]
