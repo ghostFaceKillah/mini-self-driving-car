@@ -94,6 +94,8 @@ Lists of RasPi supported Wifi interfaces
 - http://elinux.org/RPi_USB_Wi-Fi_Adapters
 - http://kamilslab.com/2016/01/15/best-5-wifi-adapters-for-the-raspberry-pi-2016/
 
+Nice interactive Raspi Pinout
+https://pinout.xyz
 
 
 ## Misc tips
