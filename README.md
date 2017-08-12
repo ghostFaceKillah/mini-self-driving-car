@@ -106,5 +106,3 @@ How to quickly kill a process using port 8000 in Linux?
 fuser -k 8000/udp
 ```
 
-
-
