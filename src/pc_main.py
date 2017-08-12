@@ -15,6 +15,7 @@ with Manager() as manager:
     namespace.image = None
     namespace.horizontal = state.Horizontal.nothing
     namespace.vertical = state.Vertical.nothing
+    namespace.recording = False
     namespace.done = False
 
     jobs = [

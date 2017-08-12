@@ -49,6 +49,8 @@ class StateSaver(multiprocessing.Process):
         vertical = self.state.vertical.name
 
         if img is not None:
+            self.counter += 1
+
             short_img_fname = 'img_{}.jpg'.format(self.counter)
 
             img_fname = os.path.join(self.img_dir, short_img_fname)
@@ -64,8 +66,9 @@ class StateSaver(multiprocessing.Process):
         try:
             while True:
                 time.sleep(0.1)
-                self.counter += 1
-                self.write_data_dot()
+
+                if self.state.recording:
+                    self.write_data_dot()
 
                 if self.state.done:
                     self.file.flush()

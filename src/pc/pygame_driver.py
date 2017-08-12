@@ -2,8 +2,6 @@ import cv2
 import multiprocessing
 import numpy as np
 import pygame
-import time
-import sys
 
 import lib.constant as cnst
 import lib.log as log
@@ -34,6 +32,18 @@ class PygameDriver(multiprocessing.Process):
         self.logger.info('Connecting to steering server...')
         self.logger.info('Done')
 
+    def toggle_recording_state(self):
+        """
+        In our multiprocessing-resistant state we have a variable
+        that indicates if we are recording.
+        """
+        if self.state.recording:
+            self.state.recording = False
+            self.logger.info("Recording off.")
+        else:
+            self.state.recording = True
+            self.logger.info("Recording on.")
+
     def keydown(self, event):
         """ Handle pressing key down """
         if event.key == pygame.K_UP:
@@ -44,6 +54,9 @@ class PygameDriver(multiprocessing.Process):
             self.state.horizontal = state.Horizontal.right
         if event.key == pygame.K_LEFT:
             self.state.horizontal = state.Horizontal.left
+        if event.key == pygame.K_r:
+            self.toggle_recording_state()
+
 
     def keyup(self, event):
         """ Handle key release """
@@ -63,9 +76,25 @@ class PygameDriver(multiprocessing.Process):
             if event.type == pygame.KEYUP:
                 self.keyup(event)
 
+    def put_info_text_on_image(self, img):
+        txt = "recording..."
+        out_img = cv2.putText(
+            img,
+            txt,
+            (20, 30),                 # origin
+            cv2.FONT_HERSHEY_SIMPLEX, # font
+            0.7,                      # font scale
+            (255, 0, 0),              # color
+            2,                        # thickness
+            cv2.LINE_AA               # Line type
+        )
+
+        return out_img
+
     def display_image(self):
         """ Handles whole image displaying process """
         img = self.state.image
+        recording = self.state.recording
         if img is not None:
 
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -74,6 +103,10 @@ class PygameDriver(multiprocessing.Process):
                 cnst.DISPLAY_VIDEO_RESOLUITION,
                 interpolation=cv2.INTER_CUBIC
             )
+
+            if recording:
+                img = self.put_info_text_on_image(img)
+
             img = np.transpose(img, axes=(1, 0, 2))
 
             self.screen.blit(pygame.surfarray.make_surface(img), (0, 0))
