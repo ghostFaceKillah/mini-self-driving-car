@@ -1,7 +1,7 @@
 import socket
 import sys
 
-from .constant import DIRECTION, ACTION
+from .constant import DIRECTION, ACTION, ENCODING
 
 class ClientSocket:
     def __init__(self, ip, port, verbose=True):
@@ -21,8 +21,8 @@ class ClientSocket:
         if self.verbose:
             print('sending message: {}'.format(message))
         try:
-            self.sock.sendall(bytes(message, 'utf-8'))
-        finally:
+            self.sock.sendall(bytes(message, ENCODING))
+        except:
             print('did not manage to send message')
 
     def sendCmd(self, direction, action):

@@ -2,18 +2,16 @@ import socket
 import sys
 import RPi.GPIO as GPIO
 from time import sleep 
-
 import lib.constant as cnst
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-server_address = ('0.0.0.0', cnst.KEYBOARD_EVENTS_PORT)
-print >>sys.stderr, 'starting up on %s port %s' % server_address
+server_address = ('0.0.0.0', cnst.STEERING_PORT)
 sock.bind(server_address)
 
 GPIO.setmode(GPIO.BOARD)
 
-Motor1A = 33    
+Motor1A = 33
 Motor1B = 35
 Motor1E = 37
 
@@ -30,39 +28,33 @@ GPIO.setup(Motor2B, GPIO.OUT)
 GPIO.setup(Motor2E, GPIO.OUT)
 
 def turn_right():
-    print "Turning the steering right"
     GPIO.output(Motor1A, GPIO.HIGH)
     GPIO.output(Motor1B, GPIO.LOW)
     GPIO.output(Motor1E, GPIO.HIGH)
 
 def stop_turning():
-    print "Stopping motor"
     GPIO.output(Motor1E, GPIO.LOW)
 
 
 def turn_left():
-    print "Turning the steering left"
     GPIO.output(Motor1A, GPIO.LOW)
     GPIO.output(Motor1B, GPIO.HIGH)
     GPIO.output(Motor1E, GPIO.HIGH)
 
 
 def go_forward():
-    print "Going forward"
     GPIO.output(Motor2A, GPIO.HIGH)
     GPIO.output(Motor2B, GPIO.LOW)
     GPIO.output(Motor2E, GPIO.HIGH)
 
 
 def go_back():
-    print "Going back"
     GPIO.output(Motor2A, GPIO.LOW)
     GPIO.output(Motor2B, GPIO.HIGH)
     GPIO.output(Motor2E, GPIO.HIGH)
 
 
 def stop():
-    print "Stopping the car"
     GPIO.output(Motor2E, GPIO.LOW)
 
 
@@ -94,24 +86,16 @@ def interpret(msg):
         elif action == 'stop':
             stop_turning()
 
-
-"""
-TODO:
-    Make the socket nonblocking
-    and make so that if we don't receive data for some time we stop
-    going forward so the car doesn't run away into infinity :)
-"""
-
-try: 
+try:
     stop()
     stop_turning()
     while True:
         data, client_address = sock.recvfrom(16)
 
-        print 'received {} from {}'.format(data, client_address)
-        interpret(data)
+        interpret(data.decode(cnst.ENCODING))
 
 finally:
-    print "Cleaning up GPIO"
     GPIO.cleanup()
+
+
 
