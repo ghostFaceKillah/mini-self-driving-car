@@ -125,7 +125,7 @@ class PygameDriver(multiprocessing.Process):
         if self.state.direction_probabilities is None:
             return img
 
-        txt = "Confidence: left: {}, right: {}, none: {}".format(
+        txt = "Confidence: left: {:.2%}, right: {:.2%}, none: {:.2%}".format(
                 *tuple(self.state.direction_probabilities))
         out_img = cv2.putText(
             img,

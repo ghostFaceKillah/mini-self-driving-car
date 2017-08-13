@@ -39,5 +39,5 @@ DISPLAY_VIDEO_RESOLUITION = (800, 600)
 VIDEO_FRAMERATE = 25
 ENCODING = 'utf-8'
 
-MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/first.json')
-WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/first.h5')
+MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/second.json')
+WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/second-epoch-28-val_acc-0.75.hdf5')

@@ -5,8 +5,8 @@ import operator
 
 from keras.models import model_from_json
 
-import lib.constant as cnst
 import lib.state as state
+
 
 class NNFeedForwarder(multiprocessing.Process):
     def __init__(self, the_state, net_file, weight_file):
@@ -16,9 +16,8 @@ class NNFeedForwarder(multiprocessing.Process):
         self.weight_file = weight_file
         self.model = None
 
-    # TODO move the pixels by -127.5 in each color
     def preprocess(self, image):
-        return image
+        return image / 127.5 - 1.
 
     def read_model(self):
         try:
@@ -40,9 +39,10 @@ class NNFeedForwarder(multiprocessing.Process):
             time.sleep(0.1)
             if self.state.image is not None:
                 prediction = self.model.predict(self.state.image[np.newaxis, :])[0]
+                self.state.direction_probabilities = prediction
+
                 if self.state.auto:
                     index, value = max(enumerate(prediction), key=operator.itemgetter(1))
-                    self.state.direction_probabilities = prediction
                     if index == 0:
                         self.state.horizontal = state.Horizontal.left
                     elif index == 1:

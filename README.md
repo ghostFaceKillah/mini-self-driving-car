@@ -17,9 +17,8 @@ Building a small self driving car!
 
 
 ##### Machine learning
-- [ ] Add capability to load model and run on one image to check how it works
-- [ ] See how well the first model performs
-- [ ] Implement data augmentation
+- [ ] Gather a lot of data
+- [ ] Build good model
 
 
 ##### Hardware
@@ -46,6 +45,9 @@ Building a small self driving car!
 ##### Machine learning
 - [X] Add dataset merging capability
 - [X] Gather more data and train first serious model run
+- [X] Implement data augmentation
+- [X] Add capability to load model and run on one image to check how it works
+- [X] See how well the first model performs - bad ! (but in night lighting)
 
 
 - [X] improve stability of the video stream

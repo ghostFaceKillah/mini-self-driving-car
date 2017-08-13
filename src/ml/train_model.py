@@ -31,8 +31,10 @@ INPUT_IMG_SIZE = (240, 320, 3)
 BATCH_SIZE = 128
 VALID_SPLIT = 0.10
 
-MODEL_DEFINITION_FNAME = 'models/second.json'
-MODEL_WEIGHTS_FNAME = 'models/second.h5'
+MODEL_NAME = 'second'
+
+MODEL_DEFINITION_FNAME = 'models/{}.json'.format(MODEL_NAME)
+MODEL_WEIGHTS_FNAME = 'models/{}.h5'.format(MODEL_NAME)
 
 
 def shuffle(data):
@@ -144,10 +146,13 @@ def get_model():
     model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='valid'))
     model.add(ELU())
 
-    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='valid'))
+    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='same'))
     model.add(ELU())
 
-    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='valid'))
+    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='same'))
+    model.add(ELU())
+
+    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='same'))
     model.add(ELU())
 
     model.add(Flatten())
@@ -172,7 +177,14 @@ def get_model():
     )
 
     callbacks = [
-        TensorBoard()
+        TensorBoard(),
+        ModelCheckpoint(
+            'models/{}'.format(MODEL_NAME) +
+            '-epoch-{epoch:02d}-val_acc-{val_acc:.2f}.hdf5',
+            monitor='val_acc',
+            save_weights_only=True
+        )
+
     ]
 
     return model, callbacks
@@ -277,7 +289,7 @@ def main_fit_with_generator():
         validation_data=valid_gen,
         validation_steps=len(valid) / BATCH_SIZE,
         steps_per_epoch=len(train) / BATCH_SIZE,
-        nb_epoch=100,
+        epochs=30,
         callbacks=callbacks
     )
 
