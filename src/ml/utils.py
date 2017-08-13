@@ -43,13 +43,23 @@ def merge_datasets(input_datasets, output_dir):
     full_log.to_csv(out_log_fname, index=False)
 
 
-if __name__ == '__main__':
-    # TODO(all): Cause it to just merge every folder in given root folder
+def merge_whole_dir(in_dir, out_dir):
+    """
+    Merge all datasets in target in_dir and write them to out_dir
+    """
+
     in_datasets = [
-        "/home/misiu/src/self-driving/mini-self-driving-car/data/2017-08-13-11:05:19-ydykvo",
-        "/home/misiu/src/self-driving/mini-self-driving-car/data/2017-08-13-11:02:23-s14csn"
+        os.path.join(in_dir, dataset_path)
+        for dataset_path in os.listdir(in_dir)
     ]
 
-    out_dir = "data/first_big_dataset"
-
     merge_datasets(in_datasets, out_dir)
+
+
+if __name__ == '__main__':
+    merge_whole_dir(
+        in_dir='/home/misiu/src/self-driving/mini-self-driving-car/data/ok',
+        out_dir='data/first_big_dataset'
+    )
+
+

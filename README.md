@@ -16,11 +16,8 @@ Building a small self driving car!
    - Catch typical unhandled exceptions on PC side
 
 
-
 ##### Machine learning
-- [ ] Add dataset merging capability
 - [ ] Add capability to load model and run on one image to check how it works
-- [ ] Gather more data and train first serious model run
 - [ ] See how well the first model performs
 - [ ] Implement data augmentation
 
@@ -44,6 +41,13 @@ Building a small self driving car!
 - ######  (Picture, steering) tuple capture software - tested, deployed! Kind of OK hardware version!
 
 #### Smaller goals:
+
+
+##### Machine learning
+- [X] Add dataset merging capability
+- [X] Gather more data and train first serious model run
+
+
 - [X] improve stability of the video stream
 - [X] Implement driving system
 - [X] Figure out how to capture testing data        
