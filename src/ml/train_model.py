@@ -38,12 +38,20 @@ def shuffle(data):
 def load_driving_log():
     driving_log = pd.read_csv(LOG_FNAME)
 
-    driving_log.loc[:, 'no_steering'] = (driving_log.steering_horizontal == 'nothing').astype(np.float32)
-    driving_log.loc[:, 'right'] = (driving_log.steering_horizontal == 'right').astype(np.float32)
-    driving_log.loc[:, 'left'] = (driving_log.steering_horizontal == 'left').astype(np.float32)
+    driving_log.loc[:, 'no_steering'] = (
+        driving_log.steering_horizontal == 'nothing'
+    ).astype(np.float32)
+
+    driving_log.loc[:, 'right'] = (
+        driving_log.steering_horizontal == 'right'
+    ).astype(np.float32)
+
+    driving_log.loc[:, 'left'] = (
+        driving_log.steering_horizontal == 'left'
+    ).astype(np.float32)
 
     print("Basic stats for data")
-    print(driving_log.mean())
+    print(driving_log[['left', 'right', 'no_steering']].mean())
 
     return driving_log
 
@@ -76,11 +84,12 @@ def load_data():
 
 
 def batch_generator(data, batch_size, augs, preloaded_imgs):
-    batch_x = np.zeros((batch_size, INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]), dtype=np.float32)
+    batch_x = np.zeros(batch_size + INPUT_IMG_SIZE, dtype=np.float32)
     batch_y = np.zeros((batch_size, 3), dtype=np.float32)
 
     data = shuffle(data)
     idx_sample = 0
+    relevant_cols = ['left', 'right', 'no_steering']
 
     while True:
         for idx_batch in range(batch_size):
@@ -91,7 +100,7 @@ def batch_generator(data, batch_size, augs, preloaded_imgs):
 
             log_record = data.iloc[idx_sample]
 
-            y = log_record[['left', 'right', 'no_steering']].values.astype(np.float32)
+            y = log_record[relevant_cols].values.astype(np.float32)
             x = preloaded_imgs[log_record.short_fname]
 
             # apply all the augmentation
@@ -142,7 +151,11 @@ def get_model():
     model.add(Dense(3, activation='softmax'))
 
     optimizer = Adam()
-    model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
+    model.compile(
+        optimizer=optimizer,
+        loss='categorical_crossentropy',
+        metrics=['accuracy']
+    )
 
     callbacks = [
         TensorBoard()
@@ -164,7 +177,10 @@ def vanilla_data():
 
     imgs = preload_images()
 
-    x = np.zeros((len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]), dtype=np.float32)
+    x = np.zeros(
+        (len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]),
+        dtype=np.float32
+    )
 
     for idx, dlog_row in enumerate(dlog.itertuples()):
         x[idx] = imgs[dlog_row.short_fname]
@@ -175,7 +191,13 @@ def vanilla_data():
 def main_simplified_fit():
     x, y = vanilla_data()
     model, callbacks = get_model()
-    model.fit(x, y, epochs=40, batch_size=128)
+
+    # serialize model to json
+    with open('models/first.json', 'w') as json_file:
+        json_file.write(model.to_json())
+
+    model.fit(x, y, epochs=10, batch_size=128)
+    model.save_weights('models/first.h5')
 
 
 def main_fit_with_generator():
@@ -187,6 +209,10 @@ def main_fit_with_generator():
 
     model, callbacks = get_model()
 
+    # serialize model to json
+    with open('models/first.json', 'w') as json_file:
+        json_file.write(model.to_json())
+
     history = model.fit_generator(
         train_gen,
         validation_data=train_gen,
@@ -195,6 +221,8 @@ def main_fit_with_generator():
         nb_epoch=20,
         callbacks=callbacks
     )
+
+    model.save_weights('models/first.h5')
 
 
 if __name__ == '__main__':
