@@ -13,6 +13,10 @@ class NNFeedForwarder(multiprocessing.Process):
         self.weight_file = weight_file
         self.model = None
 
+    # TODO move the pixels by -127.5 in each color
+    def preprocess(self, image):
+        return image
+
     def read_model(self):
         #  try:
         with open(self.net_file) as net_file:
