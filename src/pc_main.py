@@ -6,6 +6,7 @@ import pc.image_getter as image_getter
 import pc.pygame_driver as pygame_driver
 import pc.keyboard_state_sender as keyboard_sender
 import pc.state_saver as state_saver
+import pc.neural_network_computer as nn_computer
 
 
 with Manager() as manager:
@@ -16,6 +17,7 @@ with Manager() as manager:
     namespace.horizontal = state.Horizontal.nothing
     namespace.vertical = state.Vertical.nothing
     namespace.recording = False
+    namespace.auto = False
     namespace.done = False
 
     jobs = [
@@ -23,6 +25,7 @@ with Manager() as manager:
         pygame_driver.PygameDriver(namespace),
         keyboard_sender.KeyboardSender(namespace),
         state_saver.StateSaver(namespace)
+        nn_computer.NNFeedForwarder(namespace, 'models/?.json', 'models/?.h5')
     ]
 
     for job in jobs:
