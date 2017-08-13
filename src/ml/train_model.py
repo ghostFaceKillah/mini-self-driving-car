@@ -23,7 +23,7 @@ from keras.preprocessing.image import img_to_array
 from sklearn.model_selection import train_test_split
 
 
-DATA_DIR = 'data'
+DATA_DIR = 'data/dataset_one'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
@@ -37,12 +37,13 @@ def shuffle(data):
 
 def load_driving_log():
     driving_log = pd.read_csv(LOG_FNAME)
-    driving_log = driving_log[(driving_log.counter >= 140) & (driving_log.counter <= 220)].copy()
-    driving_log.loc[:, 'short_img_fname'] = driving_log.img_fname.map(lambda x: x.split('/')[-1])
 
     driving_log.loc[:, 'no_steering'] = (driving_log.steering_horizontal == 'nothing').astype(np.float32)
     driving_log.loc[:, 'right'] = (driving_log.steering_horizontal == 'right').astype(np.float32)
     driving_log.loc[:, 'left'] = (driving_log.steering_horizontal == 'left').astype(np.float32)
+
+    print("Basic stats for data")
+    print(driving_log.mean())
 
     return driving_log
 
@@ -54,7 +55,7 @@ def preload_images():
     For starters it should be good enough.
     """
     driving_log = load_driving_log()
-    imgs_list = list(driving_log.short_img_fname)
+    imgs_list = list(driving_log.short_fname)
 
     resu = {}
 
@@ -91,7 +92,7 @@ def batch_generator(data, batch_size, augs, preloaded_imgs):
             log_record = data.iloc[idx_sample]
 
             y = log_record[['left', 'right', 'no_steering']].values.astype(np.float32)
-            x = preloaded_imgs[log_record.short_img_fname]
+            x = preloaded_imgs[log_record.short_fname]
 
             # apply all the augmentation
             for f in augs:
@@ -166,7 +167,7 @@ def vanilla_data():
     x = np.zeros((len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]), dtype=np.float32)
 
     for idx, dlog_row in enumerate(dlog.itertuples()):
-        x[idx] = imgs[dlog_row.short_img_fname]
+        x[idx] = imgs[dlog_row.short_fname]
 
     return x, y
 
@@ -174,7 +175,7 @@ def vanilla_data():
 def main_simplified_fit():
     x, y = vanilla_data()
     model, callbacks = get_model()
-    model.fit(x, y, epochs=100, batch_size=81)
+    model.fit(x, y, epochs=40, batch_size=128)
 
 
 def main_fit_with_generator():
@@ -191,11 +192,11 @@ def main_fit_with_generator():
         validation_data=train_gen,
         validation_steps=5,
         samples_per_epoch=5*BATCH_SIZE,
-        nb_epoch=100,
+        nb_epoch=20,
         callbacks=callbacks
     )
 
 
 if __name__ == '__main__':
-    # main_simplified_fit()
-    main_fit_with_generator()
+    main_simplified_fit()
+    # main_fit_with_generator()
