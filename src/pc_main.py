@@ -18,7 +18,9 @@ with Manager() as manager:
     namespace.horizontal = state.Horizontal.nothing
     namespace.vertical = state.Vertical.nothing
     namespace.recording = False
-    namespace.auto = True # False
+    namespace.auto = False
+    namespace.showpred = False
+    namespace.direction_probabilities = None
     namespace.done = False
 
     jobs = [
