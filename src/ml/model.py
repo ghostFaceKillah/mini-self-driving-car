@@ -1,3 +1,10 @@
+"""
+There is an easy heuristic that when starting out with new neural nets project.
+You should take a small piece of your data and try to overfit it.
+
+If you can't, usually it means you are doing something wrong.
+
+"""
 import cv2
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
@@ -9,7 +16,7 @@ import tqdm
 
 from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.layers import Dense, Dropout, Flatten, Lambda, ELU
-from keras.layers.convolutional import Convolution2D
+from keras.layers.convolutional import Conv2D
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.preprocessing.image import img_to_array
@@ -23,8 +30,7 @@ LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
 INPUT_IMG_SIZE = (240, 320, 3)
-LEARNING_RATE = 1e-4
-BATCH_SIZE = 200
+BATCH_SIZE = 100
 
 
 def shuffle(data):
@@ -33,6 +39,7 @@ def shuffle(data):
 
 def load_driving_log():
     driving_log = pd.read_csv(LOG_FNAME)
+    driving_log = driving_log[(driving_log.counter >= 140) & (driving_log.counter <= 220)].copy()
     driving_log.loc[:, 'short_img_fname'] = driving_log.img_fname.map(lambda x: x.split('/')[-1])
 
     driving_log.loc[:, 'no_steering'] = (driving_log.steering_horizontal == 'nothing').astype(np.float32)
@@ -84,10 +91,9 @@ def batch_generator(data, batch_size, augs, preloaded_imgs):
                 idx_sample = 0
 
             log_record = data.iloc[idx_sample]
-            x, y = None, None
 
             y = log_record[['left', 'right', 'no_steering']].values.astype(np.float32)
-            x = imgs[log_record.short_img_fname]
+            x = preloaded_imgs[log_record.short_img_fname]
 
             # apply all the augmentation
             for f in augs:
@@ -109,35 +115,35 @@ def get_model():
     model = Sequential()
     model.add(Lambda(lambda x: x / 127.5 - 1., input_shape=INPUT_IMG_SIZE))
 
-    model.add(Convolution2D(24, 5, 5, subsample=(2, 2), border_mode='valid', init='he_normal'))
+    model.add(Conv2D(24, (5, 5), strides=(2, 2), padding='valid'))
     model.add(ELU())
 
-    model.add(Convolution2D(36, 5, 5, subsample=(2, 2), border_mode='valid', init='he_normal'))
+    model.add(Conv2D(36, (5, 5), strides=(2, 2), padding='valid'))
     model.add(ELU())
 
-    model.add(Convolution2D(48, 5, 5, subsample=(2, 2), border_mode='valid', init='he_normal'))
+    model.add(Conv2D(48, (5, 5), strides=(2, 2), padding='valid'))
     model.add(ELU())
 
-    model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='valid', init='he_normal'))
+    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='valid'))
     model.add(ELU())
 
-    model.add(Convolution2D(64, 3, 3, subsample=(1, 1), border_mode='valid', init='he_normal'))
+    model.add(Conv2D(64, (3, 3), strides=(1, 1), padding='valid'))
     model.add(ELU())
 
     model.add(Flatten())
 
-    model.add(Dense(100, init='he_normal'))
+    model.add(Dense(100))
     model.add(ELU())
 
-    model.add(Dense(50, init='he_normal'))
+    model.add(Dense(50))
     model.add(ELU())
 
-    model.add(Dense(10, init='he_normal'))
+    model.add(Dense(10))
     model.add(ELU())
 
-    model.add(Dense(3, init='he_normal'))
+    model.add(Dense(3, activation='softmax'))
 
-    optimizer = Adam(lr=LEARNING_RATE)
+    optimizer = Adam()
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     callbacks = [
@@ -148,7 +154,36 @@ def get_model():
 
 
 
-if __name__ == '__main__':
+def vanilla_data():
+    """
+    No batches, no problem.
+    """
+    dlog = load_driving_log()
+    y = dlog[[
+        'left',
+        'right',
+        'no_steering'
+    ]].values.astype(np.float32)
+
+    imgs = preload_images()
+
+    x = np.zeros((len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]), dtype=np.float32)
+
+    for idx, dlog_row in enumerate(dlog.itertuples()):
+        x[idx] = imgs[dlog_row.short_img_fname]
+
+    return x, y
+
+
+
+def main_simplified_fit():
+    x, y = vanilla_data()
+    model, callbacks = get_model()
+    model.fit(x, y, epochs=100, batch_size=81)
+
+
+
+def main_fit_with_generator():
     imgs = preload_images()
     train, valid = load_data()
 
@@ -167,3 +202,6 @@ if __name__ == '__main__':
     )
 
 
+if __name__ == '__main__':
+    # main_simplified_fit()
+    main_fit_with_generator()
