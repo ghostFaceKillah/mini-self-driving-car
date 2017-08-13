@@ -196,7 +196,7 @@ def main_simplified_fit():
     with open('models/first.json', 'w') as json_file:
         json_file.write(model.to_json())
 
-    model.fit(x, y, epochs=10, batch_size=128)
+    model.fit(x, y, epochs=40, batch_size=128)
     model.save_weights('models/first.h5')
 
 
