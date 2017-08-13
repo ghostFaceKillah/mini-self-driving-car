@@ -1,3 +1,7 @@
+import os
+
+from definitions import ROOT_DIR
+
 def msg(direction, action):
     return "{}{}".format(DIRECTION[direction], ACTION[action])
 
@@ -34,3 +38,6 @@ RASPI_VIDEO_RESOLUTION = (320, 240)
 DISPLAY_VIDEO_RESOLUITION = (800, 600)
 VIDEO_FRAMERATE = 25
 ENCODING = 'utf-8'
+
+MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/first.json')
+WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/first.h5')
