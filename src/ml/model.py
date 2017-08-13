@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
-import pickle
 import tqdm
 
 from keras.callbacks import ModelCheckpoint, TensorBoard
@@ -20,7 +19,6 @@ from keras.layers.convolutional import Conv2D
 from keras.models import Sequential
 from keras.optimizers import Adam
 from keras.preprocessing.image import img_to_array
-from keras.utils.np_utils import to_categorical
 
 from sklearn.model_selection import train_test_split
 
@@ -107,7 +105,6 @@ def batch_generator(data, batch_size, augs, preloaded_imgs):
         yield batch_x, batch_y
 
 
-
 def get_model():
     """
     Define and compile Keras model.
@@ -153,7 +150,6 @@ def get_model():
     return model, callbacks
 
 
-
 def vanilla_data():
     """
     No batches, no problem.
@@ -175,12 +171,10 @@ def vanilla_data():
     return x, y
 
 
-
 def main_simplified_fit():
     x, y = vanilla_data()
     model, callbacks = get_model()
     model.fit(x, y, epochs=100, batch_size=81)
-
 
 
 def main_fit_with_generator():

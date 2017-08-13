@@ -18,10 +18,11 @@ Building a small self driving car!
 
 
 ##### Machine learning
-- [ ] Prepare track
-- [ ] Gather data
-- [ ] Write a model
-- [ ] Train the model
+- [ ] Add dataset merging capability
+- [ ] Add capability to load model and run on one image to check how it works
+- [ ] Gather more data and train first serious model run
+- [ ] See how well the first model performs
+- [ ] Implement data augmentation
 
 
 ##### Hardware
