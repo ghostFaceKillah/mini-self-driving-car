@@ -1,6 +1,7 @@
 from multiprocessing import Manager
 
 import lib.state as state
+import lib.constant as cnst
 
 import pc.image_getter as image_getter
 import pc.pygame_driver as pygame_driver
@@ -17,15 +18,15 @@ with Manager() as manager:
     namespace.horizontal = state.Horizontal.nothing
     namespace.vertical = state.Vertical.nothing
     namespace.recording = False
-    namespace.auto = False
+    namespace.auto = True # False
     namespace.done = False
 
     jobs = [
         image_getter.VideoStreamClient(namespace),
         pygame_driver.PygameDriver(namespace),
         keyboard_sender.KeyboardSender(namespace),
-        state_saver.StateSaver(namespace)
-        nn_computer.NNFeedForwarder(namespace, 'models/?.json', 'models/?.h5')
+        state_saver.StateSaver(namespace),
+        nn_computer.NNFeedForwarder(namespace, cnst.MODEL_FILE, cnst.WEIGHT_FILE),
     ]
 
     for job in jobs:
