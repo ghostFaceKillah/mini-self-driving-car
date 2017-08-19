@@ -94,4 +94,11 @@ Output file called third.json
 
 Checking OOS by hand...
 
+Shows reasonable traces of working :)
+Needs more through testing in real world, but batteries are down.
+
+In particular spots on real right turn, turns wheels to the right.
+
+Next thing to do: Test more, next perhaps work on dataset augmentation.
+
 
