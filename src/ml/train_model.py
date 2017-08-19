@@ -23,15 +23,17 @@ from keras.preprocessing.image import img_to_array
 from sklearn.model_selection import train_test_split
 
 
-DATA_DIR = 'data/first_big_dataset'
+DATA_DIR = 'data/turn_right'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
-INPUT_IMG_SIZE = (240, 320, 3)
+# INPUT_IMG_SIZE = (240, 320, 3)
+# cropped!
+INPUT_IMG_SIZE = (100, 320, 3)
 BATCH_SIZE = 128
 VALID_SPLIT = 0.10
 
-MODEL_NAME = 'second'
+MODEL_NAME = 'third'
 
 MODEL_DEFINITION_FNAME = 'models/{}.json'.format(MODEL_NAME)
 MODEL_WEIGHTS_FNAME = 'models/{}.h5'.format(MODEL_NAME)
@@ -182,7 +184,8 @@ def get_model():
             'models/{}'.format(MODEL_NAME) +
             '-epoch-{epoch:02d}-val_acc-{val_acc:.2f}.hdf5',
             monitor='val_acc',
-            save_weights_only=True
+            save_weights_only=True,
+            save_best_only=True
         )
 
     ]
@@ -204,6 +207,7 @@ def vanilla_data():
     imgs = preload_images()
 
     x = np.zeros(
+        # cropped!
         (len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]),
         dtype=np.float32
     )
@@ -226,6 +230,11 @@ def main_simplified_fit():
     model.save_weights(MODEL_WEIGHTS_FNAME)
 
 
+def crop(img, steering):
+    cropped_img = img[140:, :]
+    return cropped_img, steering
+
+
 def random_flip(img, steering):
     if np.random.rand() < 0.5:
         return img, steering
@@ -242,7 +251,7 @@ def random_flip(img, steering):
 
 
 def random_translation(img, steering):
-    max_translation = 25.0
+    max_translation = 10.0
 
     x_translation_size = np.random.uniform(-max_translation, max_translation)
     y_translation_size = np.random.uniform(-max_translation, max_translation)
@@ -275,8 +284,8 @@ def main_fit_with_generator():
     imgs = preload_images()
     train, valid = load_data()
 
-    train_gen = batch_generator(train, BATCH_SIZE, [random_flip, random_translation], imgs)
-    valid_gen = batch_generator(valid, BATCH_SIZE, [], imgs)
+    train_gen = batch_generator(train, BATCH_SIZE, [crop, random_flip, random_translation], imgs)
+    valid_gen = batch_generator(valid, BATCH_SIZE, [crop], imgs)
 
     model, callbacks = get_model()
 
@@ -289,7 +298,7 @@ def main_fit_with_generator():
         validation_data=valid_gen,
         validation_steps=len(valid) / BATCH_SIZE,
         steps_per_epoch=len(train) / BATCH_SIZE,
-        epochs=30,
+        epochs=100,
         callbacks=callbacks
     )
 

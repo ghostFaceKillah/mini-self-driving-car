@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 import multiprocessing
 import time
 import numpy as np
@@ -17,7 +19,16 @@ class NNFeedForwarder(multiprocessing.Process):
         self.model = None
 
     def preprocess(self, image):
-        return image / 127.5 - 1.
+        rescaled = image / 127.5 - 1.
+        cropped = rescaled[140:, :]
+
+        # beka
+        # cropped = np.fliplr(cropped)
+        # plt.imshow(cropped)
+        # plt.show()
+
+        batchified = cropped[np.newaxis, :]
+        return batchified
 
     def read_model(self):
         try:
@@ -38,7 +49,8 @@ class NNFeedForwarder(multiprocessing.Process):
         while True:
             time.sleep(0.1)
             if self.state.image is not None:
-                prediction = self.model.predict(self.state.image[np.newaxis, :])[0]
+                processed_img = self.preprocess(self.state.image)
+                prediction = self.model.predict(processed_img)[0]
                 self.state.direction_probabilities = prediction
 
                 if self.state.auto:

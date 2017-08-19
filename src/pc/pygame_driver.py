@@ -87,7 +87,6 @@ class PygameDriver(multiprocessing.Process):
         if event.key == pygame.K_s:
             self.toggle_pred_display()
 
-
     def keyup(self, event):
         """ Handle key release """
         if event.key in [pygame.K_UP, pygame.K_DOWN]:
