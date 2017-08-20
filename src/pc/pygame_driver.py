@@ -146,6 +146,11 @@ class PygameDriver(multiprocessing.Process):
         if img is not None:
 
             img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+            # display two horizon guiding lines
+            img[140, :] = np.array([255, 0, 0])
+            img[120, :] = np.array([0, 255, 0])
+
             img = cv2.resize(
                 img,
                 cnst.DISPLAY_VIDEO_RESOLUITION,
