@@ -19,7 +19,7 @@ with Manager() as manager:
     namespace.vertical = state.Vertical.nothing
     namespace.recording = False
     namespace.auto = False
-    namespace.showpred = False
+    namespace.showpred = True
     namespace.direction_probabilities = None
     namespace.done = False
 
