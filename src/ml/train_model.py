@@ -9,6 +9,7 @@ import cv2
 import matplotlib.image as mpimg
 import matplotlib.pyplot as plt
 import numpy as np
+import glob
 import os
 import pandas as pd
 import tqdm
@@ -22,6 +23,7 @@ from keras.preprocessing.image import img_to_array
 
 from sklearn.model_selection import train_test_split
 
+import lib.file as file_util
 
 DATA_DIR = 'data/turn_right'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
@@ -33,10 +35,46 @@ INPUT_IMG_SIZE = (100, 320, 3)
 BATCH_SIZE = 128
 VALID_SPLIT = 0.10
 
-MODEL_NAME = 'third'
+MODEL_NAME = 'four'
+MODEL_SAVEPATH = None
 
-MODEL_DEFINITION_FNAME = 'models/{}.json'.format(MODEL_NAME)
-MODEL_WEIGHTS_FNAME = 'models/{}.h5'.format(MODEL_NAME)
+# MODEL_DEFINITION_FNAME = 'models/{}.json'.format(MODEL_NAME)
+# MODEL_WEIGHTS_FNAME = 'models/{}.h5'.format(MODEL_NAME)
+
+
+def current_experiment_savepath():
+    global MODEL_SAVEPATH
+
+    if MODEL_SAVEPATH is None:
+        runs_list = glob.glob('models/{}_run_*'.format(MODEL_NAME))
+
+        if len(runs_list) == 0:
+            MODEL_SAVEPATH = 'models/{}_run_00'.format(MODEL_NAME)
+        else:
+            last_run = sorted(runs_list)[-1]
+            last_run_no = int(last_run.split('_')[-1])
+            new_no = last_run_no + 1
+
+            MODEL_SAVEPATH = 'models/{}_run_{:02d}'.format(MODEL_NAME, new_no)
+
+    file_util.mkdir_p(MODEL_SAVEPATH)
+
+    return MODEL_SAVEPATH
+
+
+def model_weights_fname():
+    return os.path.join(current_experiment_savepath(), "weights.hdf5")
+
+
+def model_def_fname():
+    return os.path.join(current_experiment_savepath(), "model.json")
+
+
+def model_weights_fname_detailed():
+    return os.path.join(
+        current_experiment_savepath(),
+        "weights-epoch-{epoch:02d}-val_acc-{val_acc:.2f}.hdf5"
+    )
 
 
 def shuffle(data):
@@ -181,8 +219,7 @@ def get_model():
     callbacks = [
         TensorBoard(),
         ModelCheckpoint(
-            'models/{}'.format(MODEL_NAME) +
-            '-epoch-{epoch:02d}-val_acc-{val_acc:.2f}.hdf5',
+            model_weights_fname_detailed(),
             monitor='val_acc',
             save_weights_only=True,
             save_best_only=True
@@ -223,11 +260,11 @@ def main_simplified_fit():
     model, callbacks = get_model()
 
     # serialize model to json
-    with open(MODEL_DEFINITION_FNAME, 'w') as json_file:
+    with open(model_def_fname(), 'w') as json_file:
         json_file.write(model.to_json())
 
     model.fit(x, y, epochs=10, batch_size=128)
-    model.save_weights(MODEL_WEIGHTS_FNAME)
+    model.save_weights(model_weights_fname())
 
 
 def crop(img, steering):
@@ -290,7 +327,7 @@ def main_fit_with_generator():
     model, callbacks = get_model()
 
     # serialize model to json
-    with open(MODEL_DEFINITION_FNAME, 'w') as json_file:
+    with open(model_def_fname(), 'w') as json_file:
         json_file.write(model.to_json())
 
     history = model.fit_generator(
@@ -302,7 +339,7 @@ def main_fit_with_generator():
         callbacks=callbacks
     )
 
-    model.save_weights(MODEL_WEIGHTS_FNAME)
+    model.save_weights(model_weights_fname())
 
 
 if __name__ == '__main__':
