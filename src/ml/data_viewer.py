@@ -49,19 +49,24 @@ class DatasetViewer():
         pygame.display.flip()
 
     def display_additional_information(self, img):
-        steer = self.df.loc[self.idx].steering_horizontal
-        override = self.df.loc[self.idx].horizontal_override
-
-        txt = "idx: {} out of {}, steering: {}, override: {}".format(
-            self.idx, len(self.df), steer, override
-        )
-
         if BLACKOUT_TOP:
             img [:140, :] = np.array([0, 0, 0])
 
         # display two horizon guiding lines
         img[140, :] = np.array([255, 0, 0])
         img[120, :] = np.array([0, 255, 0])
+
+        if BLACKOUT_TOP:
+            text_origin = (20, int(0.4 * cnst.DISPLAY_VIDEO_RESOLUITION[0]))
+        else:
+            text_origin = (20, 30)
+
+        steer = self.df.loc[self.idx].steering_horizontal
+        override = self.df.loc[self.idx].horizontal_override
+
+        txt = "idx: {} out of {}, steering: {}, override: {}".format(
+            self.idx, len(self.df), steer, override
+        )
 
         img = cv2.resize(
             img,
@@ -72,7 +77,7 @@ class DatasetViewer():
         out_img = cv2.putText(
             img,
             txt,
-            (20, 30),                 # origin
+            text_origin,                 # origin
             cv2.FONT_HERSHEY_SIMPLEX, # font
             1.0,                      # font scale
             (255, 0, 0),              # color
