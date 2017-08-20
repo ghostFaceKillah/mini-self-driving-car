@@ -1,5 +1,5 @@
-
-20th August 2017
+Saturday, 19th August 2017
+------------------------
 
 ## Data
 
@@ -101,4 +101,51 @@ In particular spots on real right turn, turns wheels to the right.
 
 Next thing to do: Test more, next perhaps work on dataset augmentation.
 
+
+
+Sunday, 20th August 2017
+------------------------
+
+In the morning I have tested model 'three'.
+Works mixed. Sometimes it has pretty good runs, sometimes it does not.
+Overall, as a proof-of-concept it is rather encouraging, suggests
+that with sufficiently meaningful data the framework will run.
+I would say around one in 3 runs works OK.
+
+
+As an experiment, I have turned to manually adjusting  collected data.
+I hope to adjust for straight-bias in the data.
+When you are driving the car dynamically, it feels natural to adjust
+for momentum of turn and let the car coast a bit forward with straight wheels.
+
+You are way less likely to do it when doing it by hand.
+
+In the data adjustment, a person is shown the bottom crop and has to decide
+ where to go, using keyboard input. Then next frame is shown.
+Klaudynka was adjusting datapoints 6000 to the end. I was adjusting
+points 0-6000. I suspect that human agent behaviour may be noisy and
+fluctuate over time.
+
+Distribution of data - right turn only
+
+left           0.116362
+right          0.551284
+no_steering    0.332354
+
+Indeed, the data has shifted a lot to the 'right'. Previously it was a lot less
+likely. Maybe average out with the previous data? Kinda funny idea.
+
+Data still contains a lot of mess - especially the back frames are pretty bad.
+Shuold get rid of them.
+
+
+First run of the experiment is very bad, basically does not work at all.
+Retraining neural net...0
+
+Second run seems bad. Running testing on max val_acc, 27 epochs @ 83% OOS acc,
+completely wrong.
+Teststing on 11 epcohs @ 80% OOS acc same bad.
+
+Across second and first run very weird turn left at beginning of straight
+behavior. Strong signal!
 
