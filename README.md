@@ -97,6 +97,9 @@ Lists of RasPi supported Wifi interfaces
 Nice interactive Raspi Pinout
 https://pinout.xyz
 
+Some discussion what can burn L293D
+http://forum.arduino.cc/index.php?topic=16328.0
+
 
 ## Misc tips
 
