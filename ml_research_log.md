@@ -1,6 +1,8 @@
 Saturday, 19th August 2017
 ------------------------
 
+### Model 'third'
+
 ## Data
 
 As of today, we have two datasets that are not small.
@@ -149,3 +151,11 @@ Teststing on 11 epcohs @ 80% OOS acc same bad.
 Across second and first run very weird turn left at beginning of straight
 behavior. Strong signal!
 
+
+Thursday, 24 Auguest
+====================
+
+Added central vertical line to the model. Will gradually adjust data.
+Now done until 750.
+
+Added img deletion in the dataset.

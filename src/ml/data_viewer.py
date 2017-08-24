@@ -55,6 +55,7 @@ class DatasetViewer():
         # display two horizon guiding lines
         img[140, :] = np.array([255, 0, 0])
         img[120, :] = np.array([0, 255, 0])
+        img[:, 160] = np.array([0, 0, 255])
 
         if BLACKOUT_TOP:
             text_origin = (20, int(0.4 * cnst.DISPLAY_VIDEO_RESOLUITION[0]))
@@ -95,11 +96,13 @@ class DatasetViewer():
 
         self.display(img)
 
-
     def handle_closing(self):
         # make saver here, I guess
 
         self.df.loc[:, 'steering_horizontal'] = self.df.horizontal_override
+        self.df = self.df[self.df.horizontal_override != 'delete']
+        self.df = self.df.reindex(range(len(self.df)))
+
         self.df.to_csv(LOG_PATH)
 
         sys.exit(0)
@@ -122,6 +125,12 @@ class DatasetViewer():
                     self.pressing_state = 'next'
                 if event.key == pygame.K_d:
                     self.override_state = 'right'
+                    self.pressing_state = 'next'
+                if event.key == pygame.K_x:
+                    self.override_state = 'delete'
+                    self.pressing_state = 'next'
+                if event.key == pygame.K_k:
+                    self.override_state = 'delete'
                     self.pressing_state = 'next'
             if event.type == pygame.KEYUP:
                 self.pressing_state = None
