@@ -12,6 +12,7 @@ import numpy as np
 import glob
 import os
 import pandas as pd
+import shutil
 import tqdm
 
 from keras.callbacks import ModelCheckpoint, TensorBoard
@@ -57,7 +58,9 @@ def current_experiment_savepath():
 
             MODEL_SAVEPATH = 'models/{}_run_{:02d}'.format(MODEL_NAME, new_no)
 
+
     file_util.mkdir_p(MODEL_SAVEPATH)
+    shutil.copy(__file__, os.path.join(MODEL_SAVEPATH, 'model.py'))
 
     return MODEL_SAVEPATH
 
