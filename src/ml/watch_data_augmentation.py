@@ -61,7 +61,7 @@ while True:
         for f in transforms:
             new_img, _ = f(new_img, np.array([0, 0, 0]))
 
-        # axs[int(plot_i / 6)][plot_i % 6].imshow(new_img, cmap='gray')
+        # axs[int(plot_i / 6)][plot_i % 6].imshow(new_img)
         axs[int(plot_i / 6)][plot_i % 6].imshow(new_img, cmap='gray')
 
     plt.show()

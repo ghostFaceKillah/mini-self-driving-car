@@ -211,3 +211,12 @@ OK Implemented some brightness adjustments, etc.
 There are some pretty sophisticated tricks for adjusting brightness in
 tensorpack, but we can focus on simplified version at hand for now.
 
+
+Based on Occam's razor should probably kick out dropout, not sure if it is
+helping us in any way...
+
+Kicked out dropout, added the brightness based augs, called model six.
+Good luck :D
+
+Works perfect! What a win!
+Rides one curve track perfectly.

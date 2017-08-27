@@ -60,7 +60,7 @@ def random_rotation(img, steering):
     return rotated_img, steering
 
 
-def to_centered_float(img, steering):
+def to_unit_interval_float(img, steering):
     """
     Input img is of type np.uint8 in range 0 255
     Output img is of type np.float32 in range -1 1

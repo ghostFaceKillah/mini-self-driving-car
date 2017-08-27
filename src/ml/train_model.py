@@ -25,23 +25,26 @@ from keras.preprocessing.image import img_to_array
 from sklearn.model_selection import train_test_split
 
 import lib.file as file_util
+import ml.img_augmentation as img_aug
 
 DATA_DIR = 'data/turn_right'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
 # INPUT_IMG_SIZE = (240, 320, 3)
-# cropped!
-INPUT_IMG_SIZE = (100, 320, 3)
+# cropped / grayed ?
+
+# INPUT_IMG_SIZE = (100, 320, 3)
+INPUT_IMG_SIZE = (100, 320, 1)
+
 BATCH_SIZE = 128
 VALID_SPLIT = 0.10
 
-MODEL_NAME = 'four'
+MODEL_NAME = 'six'
 MODEL_SAVEPATH = None
 
-# MODEL_DEFINITION_FNAME = 'models/{}.json'.format(MODEL_NAME)
-# MODEL_WEIGHTS_FNAME = 'models/{}.h5'.format(MODEL_NAME)
 
+################## Path helpers
 
 def current_experiment_savepath():
     global MODEL_SAVEPATH
@@ -57,7 +60,6 @@ def current_experiment_savepath():
             new_no = last_run_no + 1
 
             MODEL_SAVEPATH = 'models/{}_run_{:02d}'.format(MODEL_NAME, new_no)
-
 
     file_util.mkdir_p(MODEL_SAVEPATH)
     shutil.copy(__file__, os.path.join(MODEL_SAVEPATH, 'model.py'))
@@ -80,9 +82,11 @@ def model_weights_fname_detailed():
     )
 
 
+
+######################## Data loading
+
 def shuffle(data):
     return data.sample(frac=1.).reset_index(drop=True)
-
 
 def load_driving_log():
     driving_log = pd.read_csv(LOG_FNAME)
@@ -122,8 +126,14 @@ def preload_images():
     for img_fname_short in tqdm.tqdm(imgs_list):
         img_fname = os.path.join(IMG_DIR, img_fname_short)
         pre_img = mpimg.imread(img_fname)
-        img = img_to_array(pre_img)
-        img = img / 127.5 - 1.
+
+        # Moved to data processing
+        # img = img_to_array(pre_img)
+        # img = img / 127.5 - 1.
+
+        # Maybe still want to crop etc for simplified data tasks
+        img = pre_img
+
         resu[img_fname_short] = img
 
     return resu
@@ -136,6 +146,8 @@ def load_data():
 
     return train, valid
 
+
+######################## Batch generator
 
 def batch_generator(data, batch_size, augs, preloaded_imgs):
     batch_x = np.zeros([batch_size] + list(INPUT_IMG_SIZE), dtype=np.float32)
@@ -161,13 +173,45 @@ def batch_generator(data, batch_size, augs, preloaded_imgs):
             for f in augs:
                 x, y = f(x, y)
 
-            batch_x[idx_batch] = x
+            if len(x.shape) == 2:
+                batch_x[idx_batch] = x[..., np.newaxis]
+            else:
+                batch_x[idx_batch] = x
             batch_y[idx_batch] = y
 
             idx_sample += 1
 
         yield batch_x, batch_y
 
+
+def vanilla_data():
+    """
+    No batches, no problem.
+    """
+    dlog = load_driving_log()
+    y = dlog[[
+        'left',
+        'right',
+        'no_steering'
+    ]].values.astype(np.float32)
+
+    imgs = preload_images()
+    # TODO: Cast to float, center!
+
+    x = np.zeros(
+        # cropped!
+        (len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]),
+        dtype=np.float32
+    )
+
+    for idx, dlog_row in enumerate(dlog.itertuples()):
+        x[idx] = imgs[dlog_row.short_fname]
+
+    return x, y
+
+
+
+################################### Model
 
 def get_model():
     """
@@ -233,30 +277,7 @@ def get_model():
     return model, callbacks
 
 
-def vanilla_data():
-    """
-    No batches, no problem.
-    """
-    dlog = load_driving_log()
-    y = dlog[[
-        'left',
-        'right',
-        'no_steering'
-    ]].values.astype(np.float32)
-
-    imgs = preload_images()
-
-    x = np.zeros(
-        # cropped!
-        (len(y), INPUT_IMG_SIZE[0], INPUT_IMG_SIZE[1], INPUT_IMG_SIZE[2]),
-        dtype=np.float32
-    )
-
-    for idx, dlog_row in enumerate(dlog.itertuples()):
-        x[idx] = imgs[dlog_row.short_fname]
-
-    return x, y
-
+################################# Main loops
 
 def main_simplified_fit():
     x, y = vanilla_data()
@@ -270,62 +291,32 @@ def main_simplified_fit():
     model.save_weights(model_weights_fname())
 
 
-def crop(img, steering):
-    cropped_img = img[140:, :]
-    return cropped_img, steering
-
-
-def random_flip(img, steering):
-    if np.random.rand() < 0.5:
-        return img, steering
-    else:
-        new_steering = np.array([
-            steering[1],
-            steering[0],
-            steering[2]
-        ])
-
-        new_img = cv2.flip(img, 1)
-
-        return new_img, new_steering
-
-
-def random_translation(img, steering):
-    max_translation = 10.0
-
-    x_translation_size = np.random.uniform(-max_translation, max_translation)
-    y_translation_size = np.random.uniform(-max_translation, max_translation)
-
-    translation_matrix = np.array([
-        [1.0, 0.0, x_translation_size],
-        [0.0, 1.0, y_translation_size]
-    ])
-
-    translated_img = cv2.warpAffine(img, translation_matrix,
-                                    (img.shape[1], img.shape[0]))
-
-    # NOTE: Warning, can interfere with steering
-    return translated_img, steering
-
-
-def random_rotation(img, steering):
-    rg = 5
-    theta = np.pi / 180 * np.random.uniform(-rg, rg)
-    rotation_matrix = np.array([[np.cos(theta), -np.sin(theta), 0],
-                                [np.sin(theta), np.cos(theta), 0]])
-
-    rotated_img = cv2.warpAffine(img, rotation_matrix,
-                                 (img.shape[1], img.shape[0]))
-
-    return rotated_img, steering
-
-
 def main_fit_with_generator():
     imgs = preload_images()
     train, valid = load_data()
 
-    train_gen = batch_generator(train, BATCH_SIZE, [crop, random_flip, random_translation], imgs)
-    valid_gen = batch_generator(valid, BATCH_SIZE, [crop], imgs)
+    train_gen = batch_generator(train, BATCH_SIZE,
+        [
+            img_aug.crop,
+            img_aug.to_gray,
+            img_aug.contrast,
+            img_aug.brightness_additive,
+            img_aug.random_flip,
+            img_aug.random_rotation,
+            img_aug.random_translation,
+            img_aug.to_unit_interval_float
+        ],
+        imgs
+    )
+
+    valid_gen = batch_generator(valid, BATCH_SIZE,
+        [
+            img_aug.crop,
+            img_aug.to_gray,
+            img_aug.to_unit_interval_float
+        ],
+        imgs
+    )
 
     model, callbacks = get_model()
 
