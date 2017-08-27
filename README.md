@@ -16,12 +16,9 @@ Building a small self driving car!
    - Catch typical unhandled exceptions on PC side
 
 
-
 ##### Machine learning
-- [ ] Prepare track
-- [ ] Gather data
-- [ ] Write a model
-- [ ] Train the model
+- [ ] Gather a lot of data
+- [ ] Build good model
 
 
 ##### Hardware
@@ -43,6 +40,16 @@ Building a small self driving car!
 - ######  (Picture, steering) tuple capture software - tested, deployed! Kind of OK hardware version!
 
 #### Smaller goals:
+
+
+##### Machine learning
+- [X] Add dataset merging capability
+- [X] Gather more data and train first serious model run
+- [X] Implement data augmentation
+- [X] Add capability to load model and run on one image to check how it works
+- [X] See how well the first model performs - bad ! (but in night lighting)
+
+
 - [X] improve stability of the video stream
 - [X] Implement driving system
 - [X] Figure out how to capture testing data        
