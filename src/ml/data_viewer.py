@@ -103,7 +103,7 @@ class DatasetViewer():
         self.df = self.df[self.df.horizontal_override != 'delete']
         self.df = self.df.reindex(range(len(self.df)))
 
-        self.df.to_csv(LOG_PATH)
+        self.df.to_csv(LOG_PATH, index=False)
 
         sys.exit(0)
 
