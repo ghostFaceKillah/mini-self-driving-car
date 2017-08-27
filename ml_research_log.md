@@ -152,10 +152,62 @@ Across second and first run very weird turn left at beginning of straight
 behavior. Strong signal!
 
 
-Thursday, 24 Auguest
+Thursday, 24th August
 ====================
 
 Added central vertical line to the model. Will gradually adjust data.
 Now done until 750.
 
 Added img deletion in the dataset.
+
+
+Saturday, 26th August
+=====================
+
+Turns out data since 6175 is different. The camera points a lot more downward.
+There is also a bug in the data adjustment algo, it writes more and more redundant
+unnamed index in front.
+
+I have readjusted all of the data by hand again, using hopefully more
+refined approach, e.g. adding the middle line.
+
+I call the first one of this 'five',
+
+I will later use data from 0 to 6175 only and see how it runs then.
+The data for 6175 - end is not like new camera setup.
+Data for 0-6175 is like new camera setup.
+
+
+first_run_00,
+Trains very nice, 92% acc. Suggests that we can
+
+
+MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/five_run_00/model.json')
+WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/five_run_00/weights-epoch-11-val_acc-0.92.hdf5')
+
+works very bad.
+Maybe because of different lighting?
+
+Recorded two new datasets kbier9, ckdjv8 in bad lighting.
+
+
+Sunday, 27th August
+===================
+
+In the light of yesterday the TODO for today is:
+- fix the bug in the data viewer / adjuster
+- implement the brightness augment. Tensorpack has a lot.
+- Add transformation debugging code. For one image you sample a lot
+  of transformations.
+- Network viewer code
+- Find image closest to given in L2 norm given a specific
+
+- we need more data! - compile the raw driving datasets in various lighting
+
+
+Should we ignore color information? Probably!
+
+OK Implemented some brightness adjustments, etc.
+There are some pretty sophisticated tricks for adjusting brightness in
+tensorpack, but we can focus on simplified version at hand for now.
+
