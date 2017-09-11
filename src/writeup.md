@@ -5,6 +5,8 @@
 
 Summary
 
+and spoiler of how it works.
+
 
 
 
@@ -59,6 +61,8 @@ Read the chip factsheet, fixed the bug.
 
 
 Remote control
+first tried TCP
+the tried UDP
 
 
 
@@ -77,11 +81,17 @@ I learned at this point that some of more advanced RC cars use more
 refined servo-style motor at front. These use PWM pulse width modulation
 and need a special hardware controller.
 
+Luckily this one was not that expensive, 20-30 euro so still has simplified
+steering with standard(what's the posh word?) engine.
+
+
 
 Remote control was too slow, fixed by buying faster intercae
 
 
 ### Machine learning
+
+Nvidia paper, Udacity
 
 
 
@@ -90,5 +100,6 @@ Remote control was too slow, fixed by buying faster intercae
 
 
 
-Lessons
+### Lessons
 * be patient
+* need a lot of money
