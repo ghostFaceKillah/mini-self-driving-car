@@ -35,9 +35,16 @@ VIDEOS_STREAMING_PORT = 8000
 STEERING_PORT = 4567
 
 RASPI_VIDEO_RESOLUTION = (320, 240)
-DISPLAY_VIDEO_RESOLUITION = (800, 600)
+
+# DISPLAY_VIDEO_RESOLUITION = (800, 600)
+DISPLAY_VIDEO_RESOLUITION = (1600, 1200)
+# DISPLAY_VIDEO_RESOLUITION = (2400, 1800)
+
 VIDEO_FRAMERATE = 25
 ENCODING = 'utf-8'
 
-MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/third.json')
-WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/third-epoch-36-val_acc-0.85.hdf5')
+# MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/third.json')
+# WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/third-epoch-36-val_acc-0.85.hdf5')
+
+MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/model.json')
+WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/weights-epoch-13-val_acc-0.91.hdf5')
