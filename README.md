@@ -72,7 +72,13 @@ Building a small self driving car!
 
 ## Links and resources found around the web
 
+There are many, many people doing similar stuff
+
 - https://github.com/hamuchiwa/AutoRCCar
+- https://www.raspberrypi.org/magpi/self-driving-rc-car/
+- https://github.com/wroscoe/donkey
+- https://diyrobocars.com (autonomous RC car racing)
+- http://blog.davidsingleton.org/nnrccar/
 
 ###### Async IO
 - https://www.fsl.cs.sunysb.edu/~vass/linux-aio.txt
