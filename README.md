@@ -1,6 +1,13 @@
 # mini-self-driving-car
 Building a small self driving car!
 
+* [Stuff to do](stuff-to-do)
+* [Done](done)
+* [Links an resources](links-and-resources-found-around-the-web)
+* [Misc tips](misc-tips)
+* [Usage](usage)
+  - [Heat map](heat-map)
+
 
 ## Stuff to do
 
@@ -33,7 +40,7 @@ Building a small self driving car!
  - [ ] upload simplified & corrected schematic of motor control board to this repo (can be done via fritzing)
 
 
-### DONE (saved here for further motivation)
+## DONE (saved here for further motivation)
 
 #### Big goals:
 - ######  Live wifi-based control from keyboard of GPU computer, very low latency, so driving the car around house is fun
@@ -104,6 +111,9 @@ Lists of RasPi supported Wifi interfaces
 Nice interactive Raspi Pinout
 https://pinout.xyz
 
+Some discussion what can burn L293D
+http://forum.arduino.cc/index.php?topic=16328.0
+
 
 ## Misc tips
 
@@ -113,5 +123,17 @@ How to quickly kill a process using port 8000 in Linux?
 fuser -k 8000/udp
 ```
 
+## Usage
+All scripts should be invoked from the `src` directory.
+### Heat map
+```
+usage: heatmap.py [-h] image_path layer_no feature_maps [feature_maps ...]
 
+positional arguments:
+  image_path    path to image to view heatmap of
+  layer_no      number of layer to stop the computation on
+  feature_maps  number of feature map to display
 
+optional arguments:
+  -h, --help    show this help message and exit
+```
