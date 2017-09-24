@@ -4,7 +4,7 @@ Building a small self driving car!
 
 ## Stuff to do
 
-#### GOAL: Implement and test a self-driven 1 turn
+#### GOAL: Implement good quality loop around a bigger track
 
 
 ##### Software
@@ -26,6 +26,7 @@ Building a small self driving car!
 - [ ] more civilised way to turn off RPI
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
 - [ ] Correct color coding of the main power line :D
+- [ ] Add some caps to the motor controller like [here] (http://www.instructables.com/id/Control-your-motors-with-L293D-and-Arduino/), explained [here](https://robotics.stackexchange.com/questions/267/why-are-capacitors-added-to-motors-in-parallel-what-is-their-purpose)
 
 
 ##### Misc
@@ -38,6 +39,7 @@ Building a small self driving car!
 #### Big goals:
 - ######  Live wifi-based control from keyboard of GPU computer, very low latency, so driving the car around house is fun
 - ######  (Picture, steering) tuple capture software - tested, deployed! Kind of OK hardware version!
+- ######  Implement and test a self-driven 1 turn
 
 #### Smaller goals:
 
