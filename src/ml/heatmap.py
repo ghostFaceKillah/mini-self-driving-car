@@ -1,5 +1,6 @@
 from __future__ import division
 import math
+import os
 
 import argparse
 import numpy as np
@@ -64,18 +65,87 @@ def get_feature_maps(tensor, maps):
     feature_maps = [ tensor[:,:,mp] for mp in maps ]
     return feature_maps
 
-def show_images(images, titles):
+def show_images(images, title=None, titles=None, save_as=None, plot_width=2):
     """
     Args:
         images (list): a list of images to display
+        title (str):   the title
         titles (list):  a list of titles
+        save_as (str):  path to save the plot
     """
     ln = len(images)
-    h, w = int(math.ceil(ln / 2)), 2
+    h, w = int(math.ceil(ln / plot_width)), plot_width
+    fig = plt.figure()
     for i, img in enumerate(images):
-        subplot = plt.subplot(h, w, i + 1)
-        subplot.imshow(img)
-    plt.show()
+        subplot = fig.add_subplot(h, w, i + 1)
+        subplot.imshow(img, cmap='gray')
+        if titles is not None:
+            subplot.set_title(titles[i])
+        subplot.axis('off')
+    if title is not None:
+        plt.suptitle(title)
+    if save_as is None:
+        plt.show()
+    else:
+        plt.savefig(save_as)
+    plt.close()
+
+def save_layer_heatmaps(layer_no, in_path, out_path, model):
+    """
+    Args:
+        layer_no (int):   number of the layer to be saved
+        in_path (str):    path to the input file
+        out_path (str):   path to the output file
+        model:            sequential Keras model
+    """
+    output = count_intermediate_output(
+        model,
+        load_process_image(in_path),
+        layer_no)
+    try:
+        n_feature_maps = output.shape[2]
+    except IndexError:
+        print('attempt to show output of non-convolutional layer')
+        return
+    feature_maps = list(range(n_feature_maps))
+    images = get_feature_maps(output, feature_maps)
+    show_images(
+            images,
+            title="Layer {}".format(layer_no),
+            save_as=out_path,
+            plot_width=math.ceil(len(feature_maps) /
+                math.sqrt(len(feature_maps)))
+            )
+
+def save_all_layers_heatmaps(in_path, output_dir,
+                             model_path=cnst.MODEL_FILE,
+                             weight_path=cnst.WEIGHT_FILE):
+    """
+    Args:
+        output_dir (str):  where to put all the files
+        in_path (str):     path to the image to be shown
+        model_path (str):  path to the model
+        weight_path (str): path to the model's weights
+    """
+    model = None
+    try:
+        with open(model_path) as net_file:
+            model = model_from_json(net_file.read())
+            model.load_weights(weight_path)
+    except Exception as e:
+        print('Problem opening one of the files')
+        print('Callback: {}'.format(e))
+        return
+
+    if not os.path.isdir(output_dir):
+        os.makedirs(output_dir)
+    
+    no_layers = len(model.layers)
+
+    for i in range(no_layers):
+        save_layer_heatmaps(i, in_path,
+                            os.path.join(output_dir, "l{}".format(i)),
+                            model)
 
 def parser():
     parser = argparse.ArgumentParser("heatmap.py")
