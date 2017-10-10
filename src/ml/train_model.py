@@ -5,29 +5,25 @@ You should take a small piece of your data and try to overfit it.
 If you can't, usually it means you are doing something wrong.
 
 """
-import cv2
-import matplotlib.image as mpimg
-import matplotlib.pyplot as plt
-import numpy as np
 import glob
 import os
-import pandas as pd
 import shutil
-import tqdm
 
+import numpy as np
+import pandas as pd
 from keras.callbacks import ModelCheckpoint, TensorBoard
 from keras.layers import Dense, Dropout, Flatten, ELU
 from keras.layers.convolutional import Conv2D
 from keras.models import Sequential
 from keras.optimizers import Adam
-from keras.preprocessing.image import img_to_array
-
 from sklearn.model_selection import train_test_split
 
 import lib.file as file_util
 import ml.img_augmentation as img_aug
+from ml.data_utils import preload_images
 
-DATA_DIR = 'data/turn_right'
+
+DATA_DIR = 'datasets/turn_right'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
@@ -88,6 +84,7 @@ def model_weights_fname_detailed():
 def shuffle(data):
     return data.sample(frac=1.).reset_index(drop=True)
 
+
 def load_driving_log():
     driving_log = pd.read_csv(LOG_FNAME)
 
@@ -108,35 +105,6 @@ def load_driving_log():
     print(driving_log[['left', 'right', 'no_steering']].mean())
 
     return driving_log
-
-
-def preload_images():
-    """
-    If dataset is small enough, training can be made a lot
-    faster via pre-loading all images into RAM.
-    For starters it should be good enough.
-    """
-    print("Preloading images into RAM...")
-
-    driving_log = load_driving_log()
-    imgs_list = list(driving_log.short_fname)
-
-    resu = {}
-
-    for img_fname_short in tqdm.tqdm(imgs_list):
-        img_fname = os.path.join(IMG_DIR, img_fname_short)
-        pre_img = mpimg.imread(img_fname)
-
-        # Moved to data processing
-        # img = img_to_array(pre_img)
-        # img = img / 127.5 - 1.
-
-        # Maybe still want to crop etc for simplified data tasks
-        img = pre_img
-
-        resu[img_fname_short] = img
-
-    return resu
 
 
 def load_data():

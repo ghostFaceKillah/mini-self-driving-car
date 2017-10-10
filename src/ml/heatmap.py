@@ -1,33 +1,17 @@
 from __future__ import division
-import math
 
 import argparse
-import numpy as np
-from keras import backend as K
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+import math
 
+import matplotlib.pyplot as plt
+import numpy as np
 from keras.models import model_from_json
 
 import lib.constant as cnst
-import ml.img_augmentation as aug
+from ml.data_utils import load_process_image
+from ml.model_utils import cut_sequential_model
+from ml.utils import group
 
-def cut_sequential_model(model, layer_no):
-    """
-    Args:
-        model: sequential keras model
-        layer_no:  number of layer to take outpu from
-    Returns:
-        a function returning output of layer number layer_no,
-        fed input suited for model
-    """
-    try:
-        input_layer = model.layers[0].input
-        output_layer = model.layers[layer_no].output
-        return K.function([input_layer], [output_layer])
-    except Exception as e:
-        print("ERROR: {}".format(e.what()))
-        return None
 
 def count_intermediate_output(model, img, layer_no):
     """
@@ -45,13 +29,6 @@ def count_intermediate_output(model, img, layer_no):
             axis=0)
     return output
 
-def load_process_image(path):
-    img = mpimg.imread(path)
-    img, _ = aug.crop(img, None)
-    img, _ = aug.to_gray(img, None)
-    img, _ = aug.to_unit_interval_float(img, None)
-    img = np.expand_dims(img, axis=-1)
-    return img
 
 def get_feature_maps(tensor, maps):
     """
@@ -64,6 +41,18 @@ def get_feature_maps(tensor, maps):
     feature_maps = [ tensor[:,:,mp] for mp in maps ]
     return feature_maps
 
+
+def get_all_feature_maps(tensor):
+    """
+    Args:
+        tensor (numpy array): an intermediate output from the 
+                              neural network, of size (H, W, ?)
+
+    """
+    feature_maps = [tensor[:,:,mp] for mp in range(tensor.shape[-1])]
+    return feature_maps
+
+
 def show_images(images, titles):
     """
     Args:
@@ -74,8 +63,9 @@ def show_images(images, titles):
     h, w = int(math.ceil(ln / 2)), 2
     for i, img in enumerate(images):
         subplot = plt.subplot(h, w, i + 1)
-        subplot.imshow(img)
+        subplot.imshow(img, cmap='gray')
     plt.show()
+
 
 def parser():
     parser = argparse.ArgumentParser("heatmap.py")
@@ -87,26 +77,82 @@ def parser():
                         help="number of feature map to display")
     return parser
 
-if __name__ == '__main__':
+
+def one_layer_some_feature_maps():
     args = parser().parse_args()
     model = None
     try:
         with open(cnst.MODEL_FILE) as net_file:
             model = model_from_json(net_file.read())
             model.load_weights(cnst.WEIGHT_FILE)
+
     except Exception as e:
         print('Problem opening one of the files')
         print('Callback: {}'.format(e))
         exit(1)
+
     output = count_intermediate_output(
         model,
         load_process_image(args.image_path),
-        args.layer_no)
+        args.layer_no
+    )
+
     images = get_feature_maps(output, args.feature_maps)
     show_images(
-            images,
-            [ "Layer {}, feature map {}".format(
+        images,
+        [
+            "Layer {}, feature map {}".format(
                     args.layer_no,
                     args.feature_maps[i]
-                ) for i in range(len(images))]
-            )
+            ) for i in range(len(images))
+        ]
+    )
+
+
+def one_layer_all_feature_maps():
+    model = None
+    try:
+        with open(cnst.MODEL_FILE) as net_file:
+            model = model_from_json(net_file.read())
+            model.load_weights(cnst.WEIGHT_FILE)
+
+    except Exception as e:
+        print('Problem opening one of the files')
+        print('Callback: {}'.format(e))
+        exit(1)
+
+    image_path = '/home/misiu/src/self-driving/mini-self-driving-car/datasets/turn_right/img/img_1_kweym3.jpg'
+
+    for layer_no in range(14):
+        print(layer_no)
+
+        output = count_intermediate_output(
+            model,
+            load_process_image(image_path),
+            layer_no
+        )
+
+        images = get_all_feature_maps(output)
+
+        grouped_images = list(group(images, 6))
+
+        big_img = np.hstack([
+            np.vstack(grp)
+            for grp in grouped_images
+        ])
+
+        plt.figure(figsize=(60, 60))
+        plt.imshow(big_img, cmap='gray', interpolation='none')
+        plt.title(
+            "Layer {} - {}".format(layer_no, model.layers[layer_no].name)
+        )
+        plt.savefig('out/layer_{}.png'.format(layer_no))
+        plt.close()
+
+
+
+
+
+if __name__ == '__main__':
+    # one_layer_some_feature_maps()
+    one_layer_all_feature_maps()
