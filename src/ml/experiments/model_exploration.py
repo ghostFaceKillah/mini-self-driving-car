@@ -1,3 +1,4 @@
+import cv2
 import ipdb
 import numpy as np
 import os
@@ -105,15 +106,33 @@ def visualize_pictures():
 
     df = pd.read_csv(datapath())
     df.loc[:, 'steering'] = -df.left + df.right
-    imgs_by_steering = df.sort_values('steering').img_name
+    imgs_by_steering = df.sort_values('steering')[['img_name', 'steering']]
     step = int(len(df) / no_imgs)
 
     images = []
 
-    for img_fname_short in imgs_by_steering[::step]:
+    # every step-th row in imgs_by_steering
+    iterable = [i for i in imgs_by_steering.itertuples()][::step]
+
+
+    for data in iterable:
+        img_fname_short, steering = data.img_name, data.steering
+
         img_fname = os.path.join(IMG_DIR, img_fname_short)
         # img = mpimg.imread(img_fname)
         img = data_utils.load_process_image(img_fname)[:, :, 0]
+
+        # out_img = cv2.putText(
+        #     img,
+        #     "{:.0%}".format(steering),
+        #     (10, 40),                 # origin
+        #     cv2.FONT_HERSHEY_SIMPLEX, # font
+        #     1.0,                      # font scale
+        #     (255, 255, 255),              # color
+        #     2,                        # thickness
+        #     cv2.LINE_AA               # Line type
+        # )
+        # images.append(out_img)
 
         images.append(img)
 
@@ -123,11 +142,9 @@ def visualize_pictures():
         for grp in grouped_images
     ])
 
-    ipdb.set_trace()
-
     plt.figure(figsize=(30, 30))
     plt.imshow(big_img, cmap='gray', interpolation='none')
-    plt.savefig(os.path.join(CURRENT_DIR, 'images_by_predicted_direction.png'))
+    plt.savefig(os.path.join(CURRENT_DIR, 'preprocessed_images_by_predicted_direction.png'))
     plt.close()
 
     print("Done")
