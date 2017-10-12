@@ -1,9 +1,11 @@
+import ipdb
 import numpy as np
 import os
 import pandas as pd
 import tqdm
 import matplotlib.image as mpimg
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 
 import lib.constant as cnst
@@ -14,9 +16,8 @@ import ml.utils as misc_utils
 
 
 
-# CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-# DATA_DIR = os.path.join(CURRENT_DIR, '../datasets/turn_right')
-DATA_DIR = '../datasets/turn_right'
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(CURRENT_DIR, '../datasets/turn_right')
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
@@ -85,13 +86,53 @@ def record_data_ordering_by_final_output(save_to_csv=False):
     new_df = pd.DataFrame(pre_df)
 
     if save_to_csv:
-        new_df.to_csv('some_data.csv')
+        new_df.to_csv(datapath())
 
     return new_df
 
+def datapath():
+    return os.path.join(CURRENT_DIR, 'some_data.csv')
 
-if __name__ == '__main__':
+
+def make_last_layer_correlation_visualization():
     new_df = record_data_ordering_by_final_output()
     sns.heatmap(new_df.corr(), fmt=".0%", annot=True, cmap='coolwarm')
 
-    print("ww")
+
+def visualize_pictures():
+    no_imgs = 60
+    imgs_in_row = 8
+
+    df = pd.read_csv(datapath())
+    df.loc[:, 'steering'] = -df.left + df.right
+    imgs_by_steering = df.sort_values('steering').img_name
+    step = int(len(df) / no_imgs)
+
+    images = []
+
+    for img_fname_short in imgs_by_steering[::step]:
+        img_fname = os.path.join(IMG_DIR, img_fname_short)
+        # img = mpimg.imread(img_fname)
+        img = data_utils.load_process_image(img_fname)[:, :, 0]
+
+        images.append(img)
+
+    grouped_images = list(misc_utils.group(images, imgs_in_row))
+    big_img = np.vstack([
+        np.hstack(grp)
+        for grp in grouped_images
+    ])
+
+    ipdb.set_trace()
+
+    plt.figure(figsize=(30, 30))
+    plt.imshow(big_img, cmap='gray', interpolation='none')
+    plt.savefig(os.path.join(CURRENT_DIR, 'images_by_predicted_direction.png'))
+    plt.close()
+
+    print("Done")
+
+
+if __name__ == '__main__':
+    visualize_pictures()
+
