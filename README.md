@@ -4,7 +4,9 @@ Building a small self driving car!
 
 ## Stuff to do
 
-#### GOAL: Implement good quality loop around a bigger track
+#### GOAL: Implement good quality loop around a bigger track.
+
+For the above goal better steering seems really necessary
 
 
 ##### Software
