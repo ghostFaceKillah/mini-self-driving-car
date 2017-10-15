@@ -57,13 +57,6 @@ def merge_whole_dir(in_dir, out_dir):
     merge_datasets(in_datasets, out_dir)
 
 
-if __name__ == '__main__':
-    merge_whole_dir(
-        in_dir='/home/misiu/src/self-driving/mini-self-driving-car/datasets/ok',
-        out_dir='datasets/first_big_dataset'
-    )
-
-
 def group(lst, n):
     """group([0,3,4,10,2,3], 2) => iterator
 
@@ -73,8 +66,17 @@ def group(lst, n):
     e.g. list(group(range(10), 3))
     [(0, 1, 2), (3, 4, 5), (6, 7, 8)]
     """
+    # TODO(mike): why is this here? looks like a bad refactor
     return zip(*[
-            itertools.islice(lst, i, None, n)
-            for i in range(n)
-        ]
+        itertools.islice(lst, i, None, n)
+        for i in range(n)
+    ]
+               )
+
+if __name__ == '__main__':
+    merge_whole_dir(
+        in_dir='/home/misiu/src/self-driving/mini-self-driving-car/datasets/all',
+        out_dir='datasets/all_to_date'
     )
+
+

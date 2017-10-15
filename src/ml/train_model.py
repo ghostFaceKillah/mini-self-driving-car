@@ -23,7 +23,7 @@ import ml.img_augmentation as img_aug
 from ml.data_utils import preload_images
 
 
-DATA_DIR = 'datasets/turn_right'
+DATA_DIR = 'datasets/all_to_date'
 LOG_FNAME = os.path.join(DATA_DIR, 'log.csv')
 IMG_DIR = os.path.join(DATA_DIR, 'img')
 
@@ -36,7 +36,7 @@ INPUT_IMG_SIZE = (100, 320, 1)
 BATCH_SIZE = 128
 VALID_SPLIT = 0.10
 
-MODEL_NAME = 'six'
+MODEL_NAME = 'eight'
 MODEL_SAVEPATH = None
 
 
@@ -260,7 +260,7 @@ def main_simplified_fit():
 
 
 def main_fit_with_generator():
-    imgs = preload_images()
+    imgs = preload_images(pd.read_csv(LOG_FNAME), IMG_DIR)
     train, valid = load_data()
 
     train_gen = batch_generator(train, BATCH_SIZE,

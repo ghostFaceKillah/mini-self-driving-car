@@ -46,5 +46,8 @@ ENCODING = 'utf-8'
 # MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/third.json')
 # WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/third-epoch-36-val_acc-0.85.hdf5')
 
-MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/model.json')
-WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/weights-epoch-13-val_acc-0.91.hdf5')
+# MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/model.json')
+# WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/six_run_03/weights-epoch-13-val_acc-0.91.hdf5')
+
+MODEL_FILE = os.path.join(ROOT_DIR, 'ml/models/eight_run_00/model.json')
+WEIGHT_FILE = os.path.join(ROOT_DIR, 'ml/models/eight_run_00/weights-epoch-61-val_acc-0.80.hdf5')
