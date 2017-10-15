@@ -22,6 +22,8 @@ Building a small self driving car!
 
 
 ##### Hardware
+- [ ] Make steering better, perhaps add the proper L293D wiring or consider making a better car with PWM steering.
+
 - [ ] Attach the pi camera in a sturdy way
 - [ ] more civilised way to turn off RPI
 - [ ] Make killswitch (turn off engine after 1 second of not streaming of "go forward commands")
