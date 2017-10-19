@@ -86,6 +86,9 @@ There are many, many people doing similar stuff
 - https://diyrobocars.com (autonomous RC car racing)
 - http://blog.davidsingleton.org/nnrccar/
 
+Also in pretty high quality, using a lot of expensive stuff:
+- https://github.com/mit-racecar
+
 ###### Async IO
 - https://www.fsl.cs.sunysb.edu/~vass/linux-aio.txt
 - http://man7.org/linux/man-pages/man7/aio.7.html
