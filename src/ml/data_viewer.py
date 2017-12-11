@@ -16,7 +16,7 @@ import lib.constant as cnst
 import lib.state as state
 
 
-DATASET_DIR = 'data/turn_right'
+DATASET_DIR = os.path.join(cnst.ROOT_DIR, 'ml', 'datasets', 'bigger_track')
 IMG_PATH = os.path.join(DATASET_DIR, 'img')
 LOG_PATH = os.path.join(DATASET_DIR, 'log.csv')
 LOG_BACKUP_PATH_TEMPLATE = os.path.join(DATASET_DIR, "backup-log-{}.csv")

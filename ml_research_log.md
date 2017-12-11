@@ -220,3 +220,27 @@ Good luck :D
 
 Works perfect! What a win!
 Rides one curve track perfectly.
+
+
+Sunday, 15th October
+=============================
+Yesterday we have constructed a bigger track around the house and gathered
+new data.
+
+Now I am training model seven at this bigger data.
+The data gathered has pretty big problem of dynamic structure.
+The steering is really sparse because when the car goes fast,
+a little steering results in big yaw angle change.
+
+
+I have tested the model on partial bigger track, as there is mess in the house
+and it seems it works. Will test more extensively later.
+
+Now making model eight that merges all good datasets to the data
+
+Modell eight works quite nice in good lighting. In the worse lighting in the
+evening, it works so-so.
+
+Additionally, lack of accurate steering became pretty big problem. The car
+quite often has correct steering commands but not enough power to execute them.
+

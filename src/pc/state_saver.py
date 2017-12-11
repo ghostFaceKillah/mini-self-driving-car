@@ -12,7 +12,7 @@ class StateSaver(multiprocessing.Process):
     Saves image and driving log
     """
     # TODO(mike): This is not great way to deal with saving path path
-    DUMP_DIR = '../data'
+    DUMP_DIR = '../datasets'
 
     def __init__(self, the_state):
         super(StateSaver, self).__init__()
@@ -47,7 +47,7 @@ class StateSaver(multiprocessing.Process):
 
     def set_up_dirs(self):
         """
-        Set up directory structure used to save data
+        Set up directory structure used to save datasets
         """
         now = dtm.datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
         dirname = "{}-{}".format(now, self.session_id)
