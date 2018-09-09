@@ -1,4 +1,7 @@
 # mini-self-driving-car
+
+[Read the write-up here](https://ghostfacekillah.github.io/car.html)
+
 Building a small self driving car!
 
 * [Stuff to do](stuff-to-do)
