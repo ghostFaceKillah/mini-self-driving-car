@@ -3,7 +3,7 @@
 Here's a small self driving car project. 
 - It is end-to-end - straight from image to motor actions.
 - Read the blogpost form writeup [here](https://ghostfacekillah.github.io/car.html).
-- I did this in 2017 (!), and now I see that this has aged a bit (felt cute might delete later).
+- I did this in 2017 (!), and now I am kinda expert in autonomous navigation and I see that this has aged a bit (felt cute might delete later).
 - It still has a bunch of value, and, please excuse me patting myself on the back, is still quite cool. 
 - What's also cool, is that I hacked a small RC car toy instead of buying a premade kit
 
