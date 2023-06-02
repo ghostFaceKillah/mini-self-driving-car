@@ -21,4 +21,4 @@ So the main steps are:
 - Train neural network on those pairs
 - Have the trained neural network control the car
 
-The repo doesn't have `requirements.txt` because I didn't know about it back at the time. xD I guess I will fix it soon.
+The repo doesn't have `requirements.txt` because I didn't know about it back at the time. xD I guess I will fix it at some point.
