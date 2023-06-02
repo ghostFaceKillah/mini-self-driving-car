@@ -13,5 +13,5 @@ using open source projects 🤯.
 
 Anyway, here's how it works:
 
-![](img/how_it_works.jpg | width=0)
+![|400](img/how_it_works.jpg)
 
