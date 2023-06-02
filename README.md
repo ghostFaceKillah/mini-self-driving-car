@@ -25,3 +25,4 @@ So the main steps are:
 
 The repo doesn't have `requirements.txt` because I didn't know about it back at the time. xD I guess I will fix it at some point.
 It's also untyped, mostly undocumented. But, the code is clean and short, and that's really cool I think.
+It was python2.7.
