@@ -16,7 +16,7 @@ using open source projects 🤯.
 
 Anyway, here's how it works:
 
- <img src="https://github.com/ghostFaceKillah/mini-self-driving-car/blob/master/img/how_it_works.jpg" alt="alt text" width=300>
+ <img src="https://github.com/ghostFaceKillah/mini-self-driving-car/blob/master/img/how_it_works.jpg" alt="alt text" width=300 style="margin-left:20%" >
 
 So the main steps are:
 - Teleop the car and thus gather training data: pairs of `(image, steering inputs from human)`
